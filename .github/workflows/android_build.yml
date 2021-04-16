@@ -1,0 +1,59 @@
+name: Android Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set Up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Run Lint
+        run: ./gradlew lint
+
+      # Reporte de Lint jaja
+      - name: Upload html test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint_html_report
+          path: app/build/reports/lint-results.html
+
+  unit-test:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      # Permite ejecutar ./gradlew
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Run tests
+        run: ./gradlew test
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit_test_report
+          path: app/build/reports/tests/testDebugUnitTest/
+
+
+
