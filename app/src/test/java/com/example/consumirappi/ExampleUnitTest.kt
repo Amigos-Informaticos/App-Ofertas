@@ -1,5 +1,6 @@
 package com.example.consumirappi
 
+import com.example.consumirappi.modelo.EmailValidator
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -18,17 +19,24 @@ class ExampleUnitTest {
     @Test
     fun verficarCorreoCorrecto(){
         var correo = "rendon.luisgerardo@gmail.com";
-        EmailValidator emailValidator
+        var emailValidator =  EmailValidator()
+
+        var bandera = emailValidator.isValidEmail(correo)
 
 
-        assertTrue()
+        assertTrue(bandera);
     }
 
     @Test
     fun verificarCorreoSinDominio(){
         var correo = "rendon.luisgerardo"
+        var emailValidator =  EmailValidator()
+        var bandera = emailValidator.isValidEmail(correo)
 
-        ass
+
+
+
+        assertFalse(bandera);
 
     }
 }
