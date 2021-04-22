@@ -12,6 +12,23 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 9)
+        assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun verficarCorreoCorrecto(){
+        var correo = "rendon.luisgerardo@gmail.com";
+        EmailValidator emailValidator
+
+
+        assertTrue()
+    }
+
+    @Test
+    fun verificarCorreoSinDominio(){
+        var correo = "rendon.luisgerardo"
+
+        ass
+
     }
 }
