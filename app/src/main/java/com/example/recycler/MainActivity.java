@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
 
 
     }
-    //
+
     private void initViews(){
         rvLista = findViewById(R.id.rvLista);
         svSearch = findViewById(R.id.svSearch);
