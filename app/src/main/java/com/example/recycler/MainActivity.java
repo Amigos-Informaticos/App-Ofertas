@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
 
@@ -128,5 +129,8 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
     }
 
 
-
+    public void clickPerfil(View view) {
+        Intent miIntent = new Intent(this, Perfil.class);
+        startActivity(miIntent);
+    }
 }

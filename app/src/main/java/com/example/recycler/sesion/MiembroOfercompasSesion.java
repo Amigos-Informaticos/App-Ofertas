@@ -6,8 +6,9 @@ public class MiembroOfercompasSesion extends Application {
     private static int idMiembro = 0;
     private static String email = null;
     private static String nickname = null;
-    private static String token = null;
+    private static String token = "";
     private static int tipoMiembro = 1;
+    private static  String contrasenia = "";
 
     public static int getIdMiembro() {
         return idMiembro;
@@ -15,6 +16,14 @@ public class MiembroOfercompasSesion extends Application {
 
     public static void setIdMiembro(int idMiembro) {
         MiembroOfercompasSesion.idMiembro = idMiembro;
+    }
+
+    public static String getContrasenia() {
+        return contrasenia;
+    }
+
+    public static void setContrasenia(String contrasenia) {
+        MiembroOfercompasSesion.contrasenia = contrasenia;
     }
 
     public static String getEmail() {
