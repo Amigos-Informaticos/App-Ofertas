@@ -35,10 +35,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="Like"
         android:onClick="likeClik"
+        android:text="Like"
         app:layout_constraintEnd_toEndOf="@+id/tvDescripcionDetail"
-        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/tvDescripcionDetail"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloDetail" />
+
+    <Button
+        android:id="@+id/btnComentar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginRight="128dp"
+        android:onClick="comentarClic"
+        android:text="Comentar"
+        app:layout_constraintEnd_toEndOf="@+id/txtComentario"
+        app:layout_constraintTop_toBottomOf="@+id/txtComentario" />
+
+    <EditText
+        android:id="@+id/txtComentario"
+        android:layout_width="379dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="36dp"
+        android:hint="Comentario"
+        app:layout_constraintStart_toStartOf="@+id/btnDislike"
+        app:layout_constraintTop_toBottomOf="@+id/btnDislike" />
+
+    <Button
+        android:id="@+id/btnDislike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:onClick="dislikeClic"
+        android:text="Dislike"
+        app:layout_constraintStart_toStartOf="@+id/tvDescripcionDetail"
+        app:layout_constraintTop_toBottomOf="@+id/imgItemDetail" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
