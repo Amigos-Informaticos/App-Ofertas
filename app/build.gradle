@@ -29,6 +29,13 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+}
+configurations {
+    all {
+        exclude module: 'httpclient'
+        exclude module: 'commons-logging'
+    }
 }
 
 dependencies {
