@@ -66,7 +66,7 @@ public class LoginOfercompas extends AppCompatActivity {
             e.printStackTrace();
         }
         // Enter the correct url for your api service site
-        String url = "http://192.168.100.10:5000/login";
+        String url = MiembroOfercompasSesion.ipSever+"login";
         MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.POST, url, object,
                 new Response.Listener<JSONObject>() {
                     @Override

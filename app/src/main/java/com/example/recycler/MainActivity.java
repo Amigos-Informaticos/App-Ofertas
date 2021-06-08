@@ -11,6 +11,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.SearchView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -80,7 +81,8 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
 
 
     public void obtenerOfertas() {
-        String url = "http://ofercompas.ddns.net:42777/ofertas";
+        String url = MiembroOfercompasSesion.ipSever+"ofertas";
+        Log.e("IP", url);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
@@ -96,6 +98,12 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
                 error -> {
                     Log.e("ERROR: ", error.networkResponse.statusCode+"");
                 });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
 
         ApplicationController.getInstance().addToRequestQueue(stringRequest);
     }
