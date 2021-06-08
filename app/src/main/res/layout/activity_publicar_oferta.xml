@@ -6,241 +6,200 @@
     android:layout_height="match_parent"
     tools:context=".PublicarOferta">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tvTitulo2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Titulo"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName5"
-            android:layout_width="368dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <TextView
-            android:id="@+id/tvDescripcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descripcion"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName6"
-            android:layout_width="372dp"
-            android:layout_height="96dp"
-            android:layout_gravity="center"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvPrecio"
-                android:layout_width="123dp"
+                android:id="@+id/tvTitulo2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Precio:"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Titulo"
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/txtPrecio"
+                android:id="@+id/txtTitulo"
+                android:layout_width="368dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="¿Qué vas a publicar?"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/tvDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Descripcion"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/txtDescripcion"
+                android:layout_width="372dp"
+                android:layout_height="61dp"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="¿De qué se trata?"
+                android:inputType="textPersonName" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvPrecio"
+                    android:layout_width="123dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="Precio:"
+                    android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/txtPrecio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="000.00"
+                    android:inputType="textPersonName" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvVinculo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Vinculo"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/txtVinculo"
+                android:layout_width="399dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Pega el vinculo aqui"
+                android:inputType="textPersonName" />
+
+            <TextView
+                android:id="@+id/tvFechaInicio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="000.00"
-                android:inputType="textPersonName" />
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="Fecha Inicio"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/dpFechaInicio"
+                style="?android:spinnerStyle"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_marginTop="10dp"
+                android:onClick="openDatePickerInicio"
+                android:text="0000-00-00"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+
+
+                />
+
+            <TextView
+                android:id="@+id/tvFechaInicio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Fecha Fin"
+                android:textSize="24sp" />
+
+            <Button
+                android:id="@+id/dpFechaFin"
+                style="?android:spinnerStyle"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_marginTop="10dp"
+                android:onClick="openDatePickerInicio"
+                android:text="0000-00-00"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+
+
+                />
+
+            <Button
+                android:id="@+id/btnBuscarImagen"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="Buscar Imagen" />
+
+            <TextView
+                android:id="@+id/tvTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Titulo"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btnBuscarVideo"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Buscar Video" />
+
+            <TextView
+                android:id="@+id/tvTitulo3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Titulo"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/spCategoria"
+                android:layout_width="302dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp" />
+
+            <Button
+                android:id="@+id/btnPublicar"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="Publicar" />
+
 
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/tvVinculo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Vinculo"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/txtVinculo"
-            android:layout_width="399dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Pega el vinculo aqui"
-            android:layout_gravity="center"
-            android:inputType="textPersonName" />
-
-        <TextView
-            android:id="@+id/tvFechaInicio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fecha Inicio"
-            android:layout_gravity="center"
-            android:textSize="24sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/txtDiaInicio"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Día"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/tvSlash1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="/"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/txtMesInicio"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Mes"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/tvSlash2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="/"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/txtAnioInicio"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Año"
-                android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvFechaInicio2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Fecha Fin"
-            android:textSize="24sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="168dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/txtDiaFin"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Día"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/tvSlash3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="/"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/txtMesFin"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Mes"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:id="@+id/tvSlash4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="/"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/txtAnioFin"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Año"
-                android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Buscar Imagen" />
-
-        <TextView
-            android:id="@+id/tvTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Titulo"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Buscar Video" />
-
-        <TextView
-            android:id="@+id/tvTitulo3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Titulo"
-            android:textSize="18sp" />
-
-        <Spinner
-            android:id="@+id/spCategoria"
-            android:layout_width="302dp"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
