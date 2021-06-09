@@ -48,6 +48,7 @@ public class MetaRequest extends JsonObjectRequest {
             if(headers.has("Set-Cookie")){
                 MetaRequest.cookies = headers.get("Set-Cookie").toString();
             }
+            jsonResponse.put("status",response.statusCode);
 
 
             return Response.success(jsonResponse,

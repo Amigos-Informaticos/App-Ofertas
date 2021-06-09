@@ -1,8 +1,13 @@
 package com.example.recycler;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,8 +31,11 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnIrAOferta;
     private Button btnComenta;
     private Button btnIrDenuncia;
+    private Button btnEliminar;
+    private Button btnActualizar;
 
     private Oferta oferta;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
 
         initViews();
         initValues();
+        funcionEliminar();
     }
 
     private void initViews() {
@@ -49,14 +58,18 @@ public class DetailActivity extends AppCompatActivity {
         btnLike = findViewById(R.id.btnLike);
         btnDisike = findViewById(R.id.btnDislike);
         btnIrAOferta = findViewById(R.id.btnIrAOferta);
+        btnEliminar = findViewById(R.id.btnEliminar);
+        btnActualizar = findViewById(R.id.btnActualizar);
     }
 
     private void initValues(){
         oferta = (Oferta) getIntent().getExtras().getSerializable("itemDetail");
+        Log.d("OFERTA A VER: ", oferta.toString());
 
         imgItemDetail.setImageResource(oferta.getImgResource());
         tvTituloDetail.setText(oferta.getTitulo());
         tvDescripcion.setText(oferta.getDescripcion());
+        tvPrecio.setText(String.valueOf(oferta.getPrecio()));
     }
 
     public void likeClik(View view) {
@@ -69,5 +82,40 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void dislikeClic(View view) {
+    }
+
+    public void funcionEliminar(){
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(DetailActivity.this);
+                alertDialog.setMessage("¿Está seguro que desea eliminar esta Oferta?").setCancelable(true);
+                alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(oferta.eliminar() == 200){
+                            Intent intent = new Intent(context, MainActivity.class);
+                            startActivity(intent);
+
+                        }
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alerta = alertDialog.create();
+                alerta.setTitle("Eliminar Oferta");
+                alerta.show();
+
+            }
+        });
+    }
+
+    public void actualizar(View view) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        //intent.putExtra("itemDetail", item);
+        startActivity(intent);
     }
 }

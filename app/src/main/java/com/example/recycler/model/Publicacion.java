@@ -1,11 +1,18 @@
 package com.example.recycler.model;
 
-import com.example.recycler.model.Categoria;
+import android.util.Log;
 
-import java.io.IOException;
-import java.util.HashMap;
+import com.android.volley.Request;
+import com.example.recycler.comunicacion.MetaRequest;
+import com.example.recycler.sesion.MiembroOfercompasSesion;
 
-public abstract class Publicacion {
+import org.json.JSONException;
+
+import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public abstract class Publicacion implements Serializable {
+    protected int idPublicacion;
     protected String titulo;
     protected String descripcion;
     protected String fechaCreacion;
@@ -13,18 +20,11 @@ public abstract class Publicacion {
     protected int puntuacion;
     protected int estado;
     protected int categoria = 0;
-    protected int idPublicacion;
-
-    public int getIdPublicador() {
-        return idPublicador;
-    }
-
-    public void setIdPublicador(int idPublicador) {
-        this.idPublicador = idPublicador;
-    }
-
     protected int idPublicador;
 
+    public Publicacion() {
+
+    }
 
     public int getIdPublicacion() {
         return idPublicacion;
@@ -46,6 +46,18 @@ public abstract class Publicacion {
     }
 
      */
+
+    public void setIdPublicacion(int idPublicacion) {
+        this.idPublicacion = idPublicacion;
+    }
+
+    public int getIdPublicador() {
+        return idPublicador;
+    }
+
+    public void setIdPublicador(int idPublicador) {
+        this.idPublicador = idPublicador;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -207,11 +219,22 @@ public abstract class Publicacion {
         HashMap respuesta = api.connect("POST", ("publicaciones/" + this.idPublicacion + "/puntuaciones"), null, parametros);
         return (int) respuesta.get("status");
     }
+*/
+    public int eliminar(){
+        AtomicInteger respuesta = new AtomicInteger(400);
+        String url = MiembroOfercompasSesion.ipSever + "ofertas/" + this.idPublicacion;
+        MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.DELETE, url, null,
+                response -> {
+                    try {
+                        respuesta.set(response.getInt("status"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-    public int eliminar() throws IOException {
-        HashMap respuesta = this.api.connect("DELETE", ("publicaciones/"+this.idPublicacion), null, null);
-        return (int) respuesta.get("status");
+
+                },error -> Log.e("ERROR ELIMINAR", error.getMessage()));
+        ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        Log.d("ELIMINO:", String.valueOf(respuesta.get()));
+        return respuesta.get();
     }
-
- */
 }

@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
                 oferta.setFechaFin(jsonObject.getString("fechaFin"));
                 oferta.setPrecio((float) jsonObject.getDouble("precio"));
                 oferta.setVinculo(jsonObject.getString("vinculo"));
+                oferta.setIdPublicador(jsonObject.getInt("publicador"));
                 oferta.setImgResource(R.drawable.ultrainsitinto);
                 ofertasRecuperadas.add(oferta);
 

@@ -22,7 +22,7 @@ import org.json.JSONException;
 
 import java.util.Calendar;
 
-public class PublicarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ActualizarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private DatePickerDialog datePickerDialogFechaInicio;
     private DatePickerDialog datePickerDialogFechaFin;
@@ -56,6 +56,7 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         dpFechaFin = findViewById(R.id.dpFechaFin);
 
         initValues();
+        llenarCampos();
 
     }
 
@@ -68,6 +69,16 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         this.txtDescripcion = findViewById(R.id.txtDescripcion);
         this.txtPrecio = findViewById(R.id.txtPrecio);
         this.txtVinculo = findViewById(R.id.txtVinculo);
+    }
+
+    private void llenarCampos(){
+        oferta = (Oferta) getIntent().getExtras().getSerializable("itemDetail");
+        Log.d("OFERTA A ACTUALIZAR: ", oferta.toString());
+
+        txtTitulo.setText(oferta.getTitulo());
+        txtDescripcion.setText(oferta.getDescripcion());
+        txtPrecio.setText(String.valueOf(oferta.getPrecio()));
+        txtVinculo.setText(String.valueOf(oferta.getVinculo()));
     }
 
     @Override

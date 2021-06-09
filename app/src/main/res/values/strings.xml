@@ -20,6 +20,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string-array name="categorias">
+        <item>Categoria</item>
         <item>Tecnologia</item>
         <item>Moda Mujer</item>
         <item>Moda Hombre</item>
