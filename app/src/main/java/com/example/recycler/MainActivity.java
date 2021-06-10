@@ -40,8 +40,14 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
         setContentView(R.layout.activity_main);
         obtenerOfertas();
         initViews();
+        iniciarMiembro();
 
 
+    }
+
+    public void iniciarMiembro(){
+        MiembroOfercompasSesion.setEmail("ocharan@gmail.com");
+        MiembroOfercompasSesion.setIdMiembro(9);
     }
 
     private void initViews(){

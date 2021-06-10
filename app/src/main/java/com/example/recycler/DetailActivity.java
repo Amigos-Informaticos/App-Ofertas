@@ -70,6 +70,7 @@ public class DetailActivity extends AppCompatActivity {
         tvTituloDetail.setText(oferta.getTitulo());
         tvDescripcion.setText(oferta.getDescripcion());
         tvPrecio.setText(String.valueOf(oferta.getPrecio()));
+        tvPuntuacion.setText(String.valueOf(oferta.getPuntuacion()));
     }
 
     public void likeClik(View view) {
@@ -114,8 +115,8 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void actualizar(View view) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        //intent.putExtra("itemDetail", item);
+        Intent intent = new Intent(this, ActualizarOferta.class);
+        intent.putExtra("oferta", oferta);
         startActivity(intent);
     }
 }

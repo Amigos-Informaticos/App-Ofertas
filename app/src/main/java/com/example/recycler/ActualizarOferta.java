@@ -1,9 +1,11 @@
 package com.example.recycler;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +22,13 @@ import com.example.recycler.sesion.SelectorFecha;
 
 import org.json.JSONException;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Calendar;
+import java.util.Date;
 
 public class ActualizarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -41,6 +49,7 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
 
     private Oferta oferta;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,14 +80,21 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
         this.txtVinculo = findViewById(R.id.txtVinculo);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void llenarCampos(){
-        oferta = (Oferta) getIntent().getExtras().getSerializable("itemDetail");
+        oferta = (Oferta) getIntent().getExtras().getSerializable("oferta");
         Log.d("OFERTA A ACTUALIZAR: ", oferta.toString());
 
         txtTitulo.setText(oferta.getTitulo());
         txtDescripcion.setText(oferta.getDescripcion());
         txtPrecio.setText(String.valueOf(oferta.getPrecio()));
         txtVinculo.setText(String.valueOf(oferta.getVinculo()));
+
+        LocalDate fechaInicio = LocalDate.parse(oferta.getFechaCreacion());
+        LocalDate fechaFin = LocalDate.parse(oferta.getFechaFin());
+
+        datePickerDialogFechaInicio.updateDate(fechaInicio.getYear(), fechaInicio.getMonthValue()-1, fechaInicio.getDayOfMonth());
+        datePickerDialogFechaFin.updateDate(fechaFin.getYear(), fechaFin.getMonthValue()-1, fechaFin.getDayOfMonth());
     }
 
     @Override
@@ -115,7 +131,7 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
         datePickerDialogFechaFin.show();
     }
 
-    public void publicar(View view){
+    public void actualizar(View view){
         instanciaOferta();
         try {
             oferta.publicar();
@@ -123,4 +139,16 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
             e.printStackTrace();
         }
     }
+/*
+    private String getTodaysDate()
+    {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return makeDateString(day, month, year);
+    }
+
+ */
 }
