@@ -15,8 +15,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
+import com.example.recycler.comunicacion.MetaRequest;
+import com.example.recycler.comunicacion.MetaStringRequest;
+import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.Oferta;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
+
+import org.json.JSONObject;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -35,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnActualizar;
 
     private Oferta oferta;
-    private Context context = this;
+    public Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +69,7 @@ public class DetailActivity extends AppCompatActivity {
         btnActualizar = findViewById(R.id.btnActualizar);
     }
 
-    private void initValues(){
+    private void initValues() {
         oferta = (Oferta) getIntent().getExtras().getSerializable("itemDetail");
         Log.d("OFERTA A VER: ", oferta.toString());
 
@@ -85,7 +92,7 @@ public class DetailActivity extends AppCompatActivity {
     public void dislikeClic(View view) {
     }
 
-    public void funcionEliminar(){
+    public void funcionEliminar() {
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,11 +101,7 @@ public class DetailActivity extends AppCompatActivity {
                 alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(oferta.eliminar() == 200){
-                            Intent intent = new Intent(context, MainActivity.class);
-                            startActivity(intent);
-
-                        }
+                        eliminarOferta();
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
@@ -114,9 +117,30 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    public void eliminarOferta(){
+        String url = MiembroOfercompasSesion.ipSever + "ofertas/" + oferta.getIdPublicacion();
+        MetaStringRequest stringRequest = new MetaStringRequest(Request.Method.DELETE, url,
+                response -> {
+                    regresarMainActivity();
+                }, error -> {
+            if (error.networkResponse != null){
+                Log.d("GG","WEBOS");
+            }
+        }
+        );
+        ApplicationController.getInstance().addToRequestQueue(stringRequest);
+    }
+
     public void actualizar(View view) {
         Intent intent = new Intent(this, ActualizarOferta.class);
         intent.putExtra("oferta", oferta);
         startActivity(intent);
     }
+
+    public void regresarMainActivity() {
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
+    }
+
+
 }

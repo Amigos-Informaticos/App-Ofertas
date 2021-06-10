@@ -3,6 +3,7 @@ package com.example.recycler.model;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.example.recycler.DetailActivity;
 import com.example.recycler.comunicacion.MetaRequest;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
 
@@ -211,30 +212,32 @@ public abstract class Publicacion implements Serializable {
         }
         return categoriaString;
     }
-/*
-    public int puntuar(int idMiembro, int esPositiva) throws IOException {
-        HashMap<String, String> parametros = new HashMap<>();
-        parametros.put("idMiembro", String.valueOf(idMiembro));
-        parametros.put("esPositiva", String.valueOf(esPositiva));
-        HashMap respuesta = api.connect("POST", ("publicaciones/" + this.idPublicacion + "/puntuaciones"), null, parametros);
-        return (int) respuesta.get("status");
-    }
-*/
-    public int eliminar(){
+
+    /*
+        public int puntuar(int idMiembro, int esPositiva) throws IOException {
+            HashMap<String, String> parametros = new HashMap<>();
+            parametros.put("idMiembro", String.valueOf(idMiembro));
+            parametros.put("esPositiva", String.valueOf(esPositiva));
+            HashMap respuesta = api.connect("POST", ("publicaciones/" + this.idPublicacion + "/puntuaciones"), null, parametros);
+            return (int) respuesta.get("status");
+        }
+
+    public int eliminar() {
         AtomicInteger respuesta = new AtomicInteger(400);
         String url = MiembroOfercompasSesion.ipSever + "ofertas/" + this.idPublicacion;
         MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.DELETE, url, null,
                 response -> {
-                    try {
-                        respuesta.set(response.getInt("status"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    DetailActivity.regresarM
 
 
-                },error -> Log.e("ERROR ELIMINAR", error.getMessage()));
+                }, error -> {
+            Log.e("ERROR ELIMINAR", error.getMessage());
+            Log.d("STATUS ELIMINAR:", String.valueOf(error.networkResponse.statusCode));
+        });
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
         Log.d("ELIMINO:", String.valueOf(respuesta.get()));
         return respuesta.get();
     }
+
+     */
 }

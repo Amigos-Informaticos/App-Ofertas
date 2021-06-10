@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.recycler.adaptador.OfertaAdapter;
+import com.example.recycler.comunicacion.MetaStringRequest;
 import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.MiembroOfercompas;
 import com.example.recycler.model.Oferta;
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
                 oferta.setPrecio((float) jsonObject.getDouble("precio"));
                 oferta.setVinculo(jsonObject.getString("vinculo"));
                 oferta.setIdPublicador(jsonObject.getInt("publicador"));
+                oferta.setPuntuacion(jsonObject.getInt("puntuacion"));
                 oferta.setImgResource(R.drawable.ultrainsitinto);
                 ofertasRecuperadas.add(oferta);
 
