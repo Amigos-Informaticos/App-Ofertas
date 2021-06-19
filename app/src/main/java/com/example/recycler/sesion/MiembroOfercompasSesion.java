@@ -9,6 +9,7 @@ public class MiembroOfercompasSesion extends Application {
     private static String token = "";
     private static int tipoMiembro = 1;
     private static  String contrasenia = "";
+    public static String ipSever = "http://192.168.56.1:5000/";
 
     public static int getIdMiembro() {
         return idMiembro;

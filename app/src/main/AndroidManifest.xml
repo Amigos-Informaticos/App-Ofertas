@@ -14,18 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Recycler"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ActualizarPerfil"></activity>
-        <activity android:name=".Perfil" />
-        <activity android:name=".RegistrarMiembroOfercompas" />
-        <activity android:name=".LoginOfercompas">
+        <activity android:name=".ActualizarOferta"></activity>
+        <activity android:name=".PublicarOferta">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActualizarPerfil" />
+        <activity android:name=".Perfil" />
+        <activity android:name=".RegistrarMiembroOfercompas" />
+        <activity android:name=".LoginOfercompas">
+        </activity>
         <activity android:name=".DetailActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+
+        </activity>
+
+
     </application>
 
 </manifest>
