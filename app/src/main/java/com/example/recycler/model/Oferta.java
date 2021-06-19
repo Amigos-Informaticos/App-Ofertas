@@ -1,61 +1,50 @@
 package com.example.recycler.model;
+
+import android.util.Log;
+
+import com.android.volley.Request;
+import com.example.recycler.comunicacion.MetaRequest;
+import com.example.recycler.sesion.MiembroOfercompasSesion;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Oferta implements Serializable {
-    private String titulo;
-    private String descripcion;
+public class Oferta extends Publicacion implements Serializable {
     private int imgResource;
-
-    //
-    private int idPublicacion;
     private float precio;
     private String vinculo;
-    private int categoria;
-    private int publicador;
-    private String fechaCreacion;
-    private String fechaFin;
-    private int puntuacion;
 
-
-    public Oferta(String titulo, String descripcion, int imgResource) {
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.imgResource = imgResource;
-    }
-    public Oferta(){
-
-    }
-
-    public String getTitulo() {
-        return titulo;
+    @Override
+    public String toString() {
+        return "Oferta{" +
+                "titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", imgResource=" + imgResource +
+                ", idPublicacion=" + idPublicacion +
+                ", precio=" + precio +
+                ", vinculo='" + vinculo + '\'' +
+                ", categoria=" + categoria +
+                ", publicador=" + idPublicador +
+                ", fechaCreacion='" + fechaCreacion + '\'' +
+                ", fechaFin='" + fechaFin + '\'' +
+                ", puntuacion=" + puntuacion +
+                '}';
     }
 
-    public String getDescripcion() {
-        return descripcion;
+
+    public Oferta() {
+        super();
     }
 
     public int getImgResource() {
         return imgResource;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public void setImgResource(int imgResource) {
         this.imgResource = imgResource;
-    }
-
-    public int getIdPublicacion() {
-        return idPublicacion;
-    }
-
-    public void setIdPublicacion(int idPublicacion) {
-        this.idPublicacion = idPublicacion;
     }
 
     public float getPrecio() {
@@ -74,43 +63,70 @@ public class Oferta implements Serializable {
         this.vinculo = vinculo;
     }
 
-    public int getCategoria() {
-        return categoria;
+    public boolean estaCompleto() {
+        return this.titulo != null &&
+                this.descripcion != null &&
+                this.precio != -1 &&
+                this.fechaCreacion != null &&
+                this.fechaFin != null &&
+                this.categoria != 0 &&
+                this.vinculo != null;
     }
 
-    public void setCategoria(int categoria) {
-        this.categoria = categoria;
+    public int publicar() throws JSONException {
+        AtomicInteger respuesta = new AtomicInteger(400);
+        Log.d("OfertaPublicada", this.toString());
+        if (this.estaCompleto()) {
+            JSONObject payload = obtenerJson();
+            String url = MiembroOfercompasSesion.ipSever + "ofertas";
+            MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.POST, url, payload,
+                    response -> {
+                        try {
+                            respuesta.set(response.getInt("status"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> Log.e("ERROR PUB", "PUBLICAR"));
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        } else {
+            respuesta.set(400);
+        }
+        return respuesta.get();
     }
 
-    public int getPublicador() {
-        return publicador;
+    public JSONObject obtenerJson() throws JSONException {
+        JSONObject ofertaJson = new JSONObject();
+        ofertaJson.put("titulo", this.titulo);
+        ofertaJson.put("descripcion", this.descripcion);
+        ofertaJson.put("fechaCreacion", this.fechaCreacion);
+        ofertaJson.put("fechaFin", this.fechaFin);
+        ofertaJson.put("categoria", String.valueOf(this.categoria));
+        ofertaJson.put("vinculo", this.getVinculo());
+        ofertaJson.put("precio", this.precio);
+        ofertaJson.put("publicador", this.idPublicador);
+        System.out.println(ofertaJson.toString());
+
+        return ofertaJson;
     }
 
-    public void setPublicador(int publicador) {
-        this.publicador = publicador;
-    }
-
-    public String getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(String fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
-    public String getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(String fechaFin) {
-        this.fechaFin = fechaFin;
-    }
-
-    public int getPuntuacion() {
-        return puntuacion;
-    }
-
-    public void setPuntuacion(int puntuacion) {
-        this.puntuacion = puntuacion;
+    public int actualizar() throws JSONException {
+        AtomicInteger respuesta = new AtomicInteger(400);
+        Log.d("OfertaPublicada", this.toString());
+        if (this.estaCompleto()) {
+            JSONObject payload = obtenerJson();
+            String url = MiembroOfercompasSesion.ipSever + "ofertas/"+this.idPublicacion;
+            MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.PUT, url, payload,
+                    response -> {
+                        try {
+                            respuesta.set(response.getInt("status"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> Log.e("ERROR PUB", "PUBLICAR"));
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        } else {
+            respuesta.set(400);
+        }
+        return respuesta.get();
     }
 }
