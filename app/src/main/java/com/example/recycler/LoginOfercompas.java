@@ -93,8 +93,11 @@ public class LoginOfercompas extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if(error.networkResponse!= null){
+                    txtEmail.setText("String Response : " + error.networkResponse.statusCode);
+                }
 
-                txtEmail.setText("String Response : " + error.networkResponse.statusCode);
+
             }
 
         });
