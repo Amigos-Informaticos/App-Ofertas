@@ -19,9 +19,7 @@ import com.android.volley.Request;
 import com.example.recycler.comunicacion.MetaStringRequest;
 import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.CodigoDescuento;
-import com.example.recycler.model.Oferta;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
-import com.squareup.picasso.Picasso;
 
 public class DetailCodigo extends AppCompatActivity {
     private ImageView imgItemDetail;
@@ -92,11 +90,11 @@ public class DetailCodigo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(DetailCodigo.this);
-                alertDialog.setMessage("¿Está seguro que desea eliminar esta Oferta?").setCancelable(true);
+                alertDialog.setMessage("¿Está seguro que desea eliminar este Codigo?").setCancelable(true);
                 alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        eliminarOferta();
+                        eliminarCodigo();
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
@@ -105,18 +103,18 @@ public class DetailCodigo extends AppCompatActivity {
                     }
                 });
                 AlertDialog alerta = alertDialog.create();
-                alerta.setTitle("Eliminar Oferta");
+                alerta.setTitle("Eliminar Codigo");
                 alerta.show();
 
             }
         });
     }
 
-    public void eliminarOferta(){
-        String url = MiembroOfercompasSesion.ipSever + "codigos/" + codigoDescuento.getIdPublicacion();
+    public void eliminarCodigo(){
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + codigoDescuento.getIdPublicacion();
         MetaStringRequest stringRequest = new MetaStringRequest(Request.Method.DELETE, url,
                 response -> {
-                    regresarMainActivity();
+                    regresarInicioCodigosDescuento();
                 }, error -> {
             if (error.networkResponse != null){
                 Log.d("GG","HI");
@@ -132,8 +130,8 @@ public class DetailCodigo extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void regresarMainActivity() {
-        Intent intent = new Intent(context, MainActivity.class);
+    public void regresarInicioCodigosDescuento() {
+        Intent intent = new Intent(context, InicioCodigosDescuento.class);
         startActivity(intent);
     }
 }
