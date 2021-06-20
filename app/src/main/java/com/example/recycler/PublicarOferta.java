@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -206,7 +207,7 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
 
 
     private void uploadBitmap(final Bitmap bitmap) {
-        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + 218 + "/multimedia";
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + 217 + "/multimedia";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
                 new Response.Listener<NetworkResponse>() {
@@ -237,8 +238,6 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
                 return params;
             }
         };
-
-        //adding the request to volley
         Volley.newRequestQueue(this).add(volleyMultipartRequest);
     }
 
