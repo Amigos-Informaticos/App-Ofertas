@@ -15,4 +15,13 @@ public class InicioCodigosDescuento extends AppCompatActivity {
 
     public void clickPerfil(View view) {
     }
+
+    public void clicSiguiente(View view) {
+    }
+
+    public void clicAtras(View view) {
+    }
+
+    public void clicPublicar(View view) {
+    }
 }
