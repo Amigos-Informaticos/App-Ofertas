@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -31,8 +32,12 @@ import com.example.recycler.model.Publicacion;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -46,9 +51,10 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnDisike;
     private Button btnIrAOferta;
     private Button btnComenta;
-    private Button btnIrDenuncia;
+    private Button btnDenunciar;
     private Button btnEliminar;
     private Button btnActualizar;
+
 
     private Oferta oferta;
     public Context context = this;
@@ -61,7 +67,8 @@ public class DetailActivity extends AppCompatActivity {
 
         initViews();
         initValues();
-        funcionEliminar();
+        obtenerInteraccion();
+        //funcionEliminar();
     }
 
     private void initViews() {
@@ -76,6 +83,7 @@ public class DetailActivity extends AppCompatActivity {
         btnIrAOferta = findViewById(R.id.btnIrAOferta);
         btnEliminar = findViewById(R.id.btnEliminar);
         btnActualizar = findViewById(R.id.btnActualizar);
+        btnDenunciar = findViewById(R.id.btnDenuncia);
     }
 
     private void initValues() {
@@ -259,5 +267,48 @@ public class DetailActivity extends AppCompatActivity {
 
     public void clicLike_(View view) {
         this.puntuar(true);
+    }
+
+    public  void obtenerInteraccion(){
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" +oferta.getIdPublicacion() + "/interaccion";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean puntuada = jsonObject.getBoolean("puntuada");
+                            boolean denunciada = jsonObject.getBoolean("denunciada");
+
+                            btnDenunciar.setEnabled(!denunciada);
+                            btnLike.setEnabled(!puntuada);
+                            btnDisike.setEnabled(!puntuada);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.d("ERROR","error => "+error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("idMiembro", String.valueOf(MiembroOfercompasSesion.getIdMiembro()));
+
+                return params;
+            }
+        };
+        ApplicationController.getInstance().addToRequestQueue(stringRequest);
+
     }
 }

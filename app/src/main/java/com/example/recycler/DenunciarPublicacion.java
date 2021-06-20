@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.recycler.comunicacion.MetaRequest;
 import com.example.recycler.model.ApplicationController;
+import com.example.recycler.model.Publicacion;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
 
 import org.json.JSONException;
@@ -26,6 +28,7 @@ public class DenunciarPublicacion extends AppCompatActivity implements AdapterVi
     private EditText txtComentario;
     private Spinner motivos;
     private String motivo;
+    private Button btnDenunciar;
 
 
     @Override
@@ -42,10 +45,12 @@ public class DenunciarPublicacion extends AppCompatActivity implements AdapterVi
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         motivos.setAdapter(adapter);
         motivos.setOnItemSelectedListener(this);
+        initViews();
     }
 
     private void initViews(){
         this.titulo= findViewById(R.id.txtTituloPublicacionD);
+        this.btnDenunciar = findViewById(R.id.buttonDenunciar_);
         this.titulo.setText(MiembroOfercompasSesion.tituloPublicacionDenunciar);
         this.txtComentario = findViewById(R.id.txtComentarioDenuncia);
 
@@ -53,8 +58,21 @@ public class DenunciarPublicacion extends AppCompatActivity implements AdapterVi
     }
 
     public void clicDenunciarPublicacion(View view) {
+        String comentario = this.txtComentario.getText().toString();
+        if(Publicacion.comentarioValido(comentario)){
+            if(motivo.isEmpty() || !motivo.equals("Motivo")){
+                this.btnDenunciar.setEnabled(false);
+                denunciar();
+            }else{
+                this.mostrarMensaje("Elige el motivo de tu denuncia");
+            }
+
+        }else{
+            this.mostrarMensaje("Comentario inválido, es muy pequeño");
+        }
     }
     private void denunciar(){
+
         JSONObject object = new JSONObject();
         try {
             object.put("idDenunciante",MiembroOfercompasSesion.getIdMiembro());
@@ -69,6 +87,7 @@ public class DenunciarPublicacion extends AppCompatActivity implements AdapterVi
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        mostrarMensaje("Denuncia Extitosa, solo puedes hacer una denuncia por publicacion");
 
 
                     }
@@ -127,5 +146,6 @@ public class DenunciarPublicacion extends AppCompatActivity implements AdapterVi
 
         return motivoInt;
     }
+
 
 }
