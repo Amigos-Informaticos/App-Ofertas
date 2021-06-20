@@ -66,8 +66,6 @@ public class DetailActivity extends AppCompatActivity {
 
     private void initViews() {
         imgItemDetail = findViewById(R.id.imgItemDetail);
-        Picasso.get().load("http://192.168.56.1:5000/publicaciones/217/imagenes").into(imgItemDetail);
-
         tvTituloDetail = findViewById(R.id.tvTituloDetail);
         tvDescripcion = findViewById(R.id.tvDescripcion);
         txtComentario = findViewById(R.id.txtComentario);
@@ -83,14 +81,11 @@ public class DetailActivity extends AppCompatActivity {
     private void initValues() {
         oferta = (Oferta) getIntent().getExtras().getSerializable("itemDetail");
         Log.d("OFERTA A VER: ", oferta.toString());
-
-        //imgItemDetail.setImageResource(Integer.parseInt("http://192.168.56.1:5000/publicaciones/217/imagenes"));
-
-
         tvTituloDetail.setText(oferta.getTitulo());
         tvDescripcion.setText(oferta.getDescripcion());
         tvPrecio.setText(String.valueOf(oferta.getPrecio()));
         tvPuntuacion.setText(String.valueOf(oferta.getPuntuacion()));
+        Picasso.get().load(oferta.getURLFoto()).into(imgItemDetail);
     }
 
     public void likeClik(View view) {

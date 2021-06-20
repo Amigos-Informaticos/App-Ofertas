@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
                 oferta.setVinculo(jsonObject.getString("vinculo"));
                 oferta.setIdPublicador(jsonObject.getInt("publicador"));
                 oferta.setPuntuacion(jsonObject.getInt("puntuacion"));
-                oferta.setImgResource(R.drawable.ultrainsitinto);
+                oferta.setURLFoto(jsonObject.getString("imagen"));
                 ofertasRecuperadas.add(oferta);
 
             } catch (JSONException e) {

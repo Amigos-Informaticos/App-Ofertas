@@ -3,10 +3,13 @@ package com.example.recycler;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,10 +17,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.example.recycler.comunicacion.DataPart;
 import com.example.recycler.comunicacion.MetaRequest;
+import com.example.recycler.comunicacion.VolleyMultipartRequest;
 import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.Oferta;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
@@ -26,28 +36,34 @@ import com.example.recycler.sesion.SelectorFecha;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Month;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActualizarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private DatePickerDialog datePickerDialogFechaInicio;
     private DatePickerDialog datePickerDialogFechaFin;
 
+    private Bitmap bitmap;
+    private Uri uriFoto;
+
+    private TextView tvTituloFoto;
+
     private EditText txtTitulo;
     private EditText txtDescripcion;
     private EditText txtPrecio;
     private EditText txtVinculo;
     private Spinner spinnerCategoria;
+    private Button btnBuscarImagen;
 
     private Button dpFechaInicio;
     private Button dpFechaFin;
+
+    private File foto;
 
     private Oferta oferta;
 
@@ -55,7 +71,7 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publicar_oferta);
+        setContentView(R.layout.activity_actualizar_oferta);
 
         spinnerCategoria = findViewById(R.id.spCategoria);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -80,6 +96,10 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
         this.txtDescripcion = findViewById(R.id.txtDescripcion);
         this.txtPrecio = findViewById(R.id.txtPrecio);
         this.txtVinculo = findViewById(R.id.txtVinculo);
+        btnBuscarImagen = findViewById(R.id.btnBuscarImagen);
+        tvTituloFoto = findViewById(R.id.tvTituloFoto);
+
+        botonBuscarImagen();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -97,6 +117,9 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
 
         datePickerDialogFechaInicio.updateDate(fechaInicio.getYear(), fechaInicio.getMonthValue()-1, fechaInicio.getDayOfMonth());
         datePickerDialogFechaFin.updateDate(fechaFin.getYear(), fechaFin.getMonthValue()-1, fechaFin.getDayOfMonth());
+
+        dpFechaInicio.setText(oferta.getFechaCreacion());
+        dpFechaFin.setText(oferta.getFechaFin());
     }
 
     @Override
@@ -113,7 +136,7 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
     public void instanciaOferta() {
         oferta.setTitulo(this.txtTitulo.getText().toString());
         oferta.setDescripcion(txtDescripcion.getText().toString());
-        oferta.setPrecio(Integer.parseInt(txtPrecio.getText().toString()));
+        oferta.setPrecio(Float.parseFloat(txtPrecio.getText().toString()));
         oferta.setFechaCreacion(dpFechaInicio.getText().toString());
         oferta.setFechaFin(dpFechaFin.getText().toString());
         oferta.setVinculo(txtVinculo.getText().toString());
@@ -132,34 +155,123 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
         datePickerDialogFechaFin.show();
     }
 
-    public void clicActualizar(View view){
+    public void actualizar(View view) {
+        btnBuscarImagen.setEnabled(false);
         instanciaOferta();
-        try {
-            actualizar();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (oferta.estaCompleta()) {
+            JSONObject payload = null;
+            try {
+                payload = oferta.obtenerJson();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String url = MiembroOfercompasSesion.ipSever + "ofertas/" + oferta.getIdPublicacion();
+            MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.PUT, url, payload,
+                    response -> {
+                        Toast.makeText(this, "Oferta actualizada exitosamente", Toast.LENGTH_SHORT).show();
+                        JSONObject ofertaMap = null;
+                        this.actualizarFoto();
+                        this.regresarAlInicio();
+
+                    }, error -> {
+                Toast.makeText(this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
+                btnBuscarImagen.setEnabled(false);
+            });
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        } else {
+            Toast.makeText(this, "Información incorrecta", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public int actualizar() throws JSONException {
-        AtomicInteger respuesta = new AtomicInteger(400);
-        Log.d("OfertaPublicada", this.toString());
-        if (oferta.estaCompleto()) {
-            JSONObject payload = oferta.obtenerJson();
-            String url = MiembroOfercompasSesion.ipSever + "ofertas/"+oferta.getIdPublicacion();
-            MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.PUT, url, payload,
-                    response -> {
+
+
+    public void botonBuscarImagen() {
+        btnBuscarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            uriFoto = data.getData();
+            String path = uriFoto.getPath();
+            this.foto = new File(path);
+            tvTituloFoto.setText(path);
+        }
+    }
+
+    public void regresarAlInicio() {
+        Intent miIntent = new Intent(this, MainActivity.class);
+        startActivity(miIntent);
+    }
+
+    public void actualizarFoto() {
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriFoto);
+            uploadBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+    private void uploadBitmap(final Bitmap bitmap) {
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + oferta.getIdPublicacion() + "/multimedia";
+
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.PUT, url,
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
                         try {
-                            respuesta.set(response.getInt("status"));
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                    }, error ->
-                    Log.e("ERROR PUB", "PUBLICAR"));
-            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
-        } else {
-            respuesta.set(400);
-        }
-        return respuesta.get();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("GotError",""+error.getMessage());
+                    }
+                }) {
+
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("archivo", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+        };
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
+    }
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 }
