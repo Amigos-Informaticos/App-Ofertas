@@ -54,6 +54,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'commons-validator:commons-validator:1.7'
+    implementation 'commons-codec:commons-codec:1.10'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
 
 
 }
