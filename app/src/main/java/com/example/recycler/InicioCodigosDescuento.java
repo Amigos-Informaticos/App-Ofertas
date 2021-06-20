@@ -24,4 +24,10 @@ public class InicioCodigosDescuento extends AppCompatActivity {
 
     public void clicPublicar(View view) {
     }
+
+    public void clicReporteUsuarios(View view) {
+    }
+
+    public void reporteOfertas(View view) {
+    }
 }
