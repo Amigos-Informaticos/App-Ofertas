@@ -44,30 +44,14 @@
         android:id="@+id/tvPuntuacion"
         android:layout_width="93dp"
         android:layout_height="43dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="000"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/btnLike"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion" />
-
-    <ImageButton
-        android:id="@+id/btnLike"
-        android:layout_width="52dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnDenuncia"
+        app:layout_constraintHorizontal_bias="0.742"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion"
-        app:srcCompat="@android:drawable/btn_star" />
-
-    <ImageButton
-        android:id="@+id/btnDislike"
-        android:layout_width="52dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toEndOf="@+id/tvPuntuacion"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion"
-        app:srcCompat="@android:drawable/btn_star" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion" />
 
     <TextView
         android:id="@+id/tvDescripcion"
@@ -88,6 +72,8 @@
         android:id="@+id/btnIrAOferta"
         android:layout_width="300dp"
         android:layout_height="45dp"
+        android:layout_marginTop="44dp"
+        android:onClick="clicIrOferta"
         android:text="Ir a la oferta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -103,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -132,20 +118,20 @@
         android:layout_marginTop="132dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:onClick="clicComentar"
         android:text="Comenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnIrAOferta" />
 
     <Button
         android:id="@+id/btnDenuncia"
-        android:layout_width="132dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="116dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:onClick="clicDenunciar"
         android:text="Denuncia"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnDislike"
         app:layout_constraintTop_toBottomOf="@+id/tvDescripcion" />
 
     <Button
@@ -168,7 +154,32 @@
         android:layout_marginEnd="44dp"
         android:layout_marginRight="44dp"
         android:text="Eliminar"
+        android:onClick="clicEliminar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnIrAOferta" />
+
+    <Button
+        android:id="@+id/buttonLike"
+        android:layout_width="71dp"
+        android:layout_height="46dp"
+        android:onClick="clicLike_"
+        android:text="like"
+        app:layout_constraintBottom_toTopOf="@+id/btnIrAOferta"
+        app:layout_constraintEnd_toStartOf="@+id/Dislike"
+        app:layout_constraintHorizontal_bias="0.872"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/Dislike"
+        android:layout_width="79dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="10dp"
+        android:onClick="clicDislike_"
+        android:text="dislike"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnIrAOferta"
+        app:layout_constraintEnd_toStartOf="@+id/btnDenuncia"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvPuntuacion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

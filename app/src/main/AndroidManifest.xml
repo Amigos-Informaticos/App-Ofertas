@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:name=".model.ApplicationController"
         android:allowBackup="true"
@@ -15,13 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Recycler"
         android:usesCleartextTraffic="true">
+        <activity android:name=".DenunciarPublicacion"></activity>
         <activity android:name=".PublicarCodigo" />
         <activity android:name=".ActualizarOferta" />
-        <activity android:name=".DetailCodigoDescuento"></activity>
+        <activity android:name=".DetailCodigoDescuento" />
         <activity android:name=".ActualizarPerfil" />
         <activity android:name=".Perfil" />
         <activity android:name=".RegistrarMiembroOfercompas" />
-        <activity android:name=".InicioCodigosDescuento"/>
+        <activity android:name=".InicioCodigosDescuento" />
         <activity android:name=".LoginOfercompas">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,9 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PublicarOferta"></activity>
+        <activity android:name=".PublicarOferta" />
         <activity android:name=".DetailActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

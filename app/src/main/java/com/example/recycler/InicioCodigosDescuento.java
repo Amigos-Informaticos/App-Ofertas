@@ -141,12 +141,15 @@ public class InicioCodigosDescuento extends AppCompatActivity implements CodigoA
     }
 
     public void clicPublicar(View view) {
+        Intent miIntent = new Intent(this, PublicarCodigo.class);
+        startActivity(miIntent);
     }
 
     public void clicReporteUsuarios(View view) {
     }
 
-    public void reporteOfertas(View view) {
+    public void clicOfertas(View view) {
+        Intent miIntent = new Intent(this, MainActivity.class);
+        startActivity(miIntent);
     }
-
 }

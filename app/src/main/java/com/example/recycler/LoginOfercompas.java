@@ -60,8 +60,8 @@ public class LoginOfercompas extends AppCompatActivity {
     public void enviarLogin(MiembroOfercompas miembroOfercompas) {
         JSONObject object = new JSONObject();
         try {
-            object.put("email","hola@gmail.com");
-            object.put("contrasenia","z6SEIOxnHpiPm1aT5kKtUw==");
+            object.put("email","elmartinez@gmail.com");
+            object.put("contrasenia","2FM3kO2CQerbYQiJjEaNZA==");
             /*DESCOMENTAR ESTO!
             object.put("email",miembroOfercompas.getEmail());
             Log.e("LA CONTRASEÑA ES: ", MiembroOfercompas.encriptar(miembroOfercompas.getContrasenia()));
