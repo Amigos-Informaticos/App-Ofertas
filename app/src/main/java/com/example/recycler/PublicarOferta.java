@@ -33,8 +33,6 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 public class PublicarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-
     private DatePickerDialog datePickerDialogFechaInicio;
     private DatePickerDialog datePickerDialogFechaFin;
 
@@ -49,7 +47,6 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
     private Button btnBuscarImagen;
 
     private TextView tvTituloFoto;
-    private TextView tvTituloVideo;
 
     private Oferta oferta;
     private File foto;

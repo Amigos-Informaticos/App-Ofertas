@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PublicarCodigo">
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,7 +15,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvTitulo2"
+                android:id="@+id/tvTituloCodigo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -25,7 +24,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/txtTitulo"
+                android:id="@+id/txtTituloCodigo"
                 android:layout_width="368dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -34,7 +33,7 @@
                 android:inputType="textPersonName" />
 
             <TextView
-                android:id="@+id/tvDescripcion"
+                android:id="@+id/tvDescripcionCodigo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -44,7 +43,7 @@
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/txtDescripcion"
+                android:id="@+id/txtDescripcionCodigo"
                 android:layout_width="372dp"
                 android:layout_height="61dp"
                 android:layout_gravity="center"
@@ -56,51 +55,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvPrecio"
-                    android:layout_width="123dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="Precio:"
-                    android:textSize="24sp" />
-
-                <EditText
-                    android:id="@+id/txtPrecio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="000.00"
-                    android:inputType="textPersonName" />
-
-            </LinearLayout>
+                android:orientation="horizontal"/>
 
             <TextView
-                android:id="@+id/tvVinculo"
+                android:id="@+id/tvCodigo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Vinculo"
+                android:text="Codigo de Descuento"
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/txtVinculo"
+                android:id="@+id/txtCodigo"
                 android:layout_width="399dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
-                android:hint="Pega el vinculo aqui"
+                android:hint="Pega el codigo aqui"
                 android:inputType="textPersonName" />
 
             <TextView
-                android:id="@+id/tvFechaInicio"
+                android:id="@+id/tvFechaInicioCodigo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -109,7 +86,7 @@
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/dpFechaInicio"
+                android:id="@+id/dpFechaInicioCodigo"
                 style="?android:spinnerStyle"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
@@ -122,12 +99,10 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-
-
                 />
 
             <TextView
-                android:id="@+id/tvFechaInicio2"
+                android:id="@+id/tvFechaInicio2Codigo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -135,7 +110,7 @@
                 android:textSize="24sp" />
 
             <Button
-                android:id="@+id/dpFechaFin"
+                android:id="@+id/dpFechaFinCodigo"
                 style="?android:spinnerStyle"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
@@ -152,31 +127,15 @@
 
                 />
 
-            <Button
-                android:id="@+id/btnBuscarImagen"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:text="Buscar Imagen" />
-
-            <TextView
-                android:id="@+id/tvTituloFoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Titulo"
-                android:textSize="18sp" />
-
             <Spinner
-                android:id="@+id/spCategoria"
+                android:id="@+id/spCategoriaCodigo"
                 android:layout_width="302dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp" />
 
             <Button
-                android:id="@+id/btnPublicar"
+                android:id="@+id/btnPublicarCodigo"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -189,3 +148,4 @@
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
