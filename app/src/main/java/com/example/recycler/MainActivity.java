@@ -41,15 +41,9 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
         setContentView(R.layout.activity_main);
         obtenerOfertas();
         initViews();
-        iniciarMiembro();
-
 
     }
 
-    public void iniciarMiembro(){
-        MiembroOfercompasSesion.setEmail("ocharan@gmail.com");
-        MiembroOfercompasSesion.setIdMiembro(9);
-    }
 
     private void initViews(){
         rvLista = findViewById(R.id.rvLista);
@@ -154,5 +148,13 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
     public void publicar(View view) {
         Intent miIntent = new Intent(this, PublicarOferta.class);
         startActivity(miIntent);
+    }
+
+    public void clicCodigos(View view) {
+        Intent miIntent = new Intent(this, InicioCodigosDescuento.class);
+        startActivity(miIntent);
+    }
+
+    public void clicAtras(View view) {
     }
 }
