@@ -16,11 +16,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.example.recycler.comunicacion.MetaRequest;
+import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.Oferta;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
 import com.example.recycler.sesion.SelectorFecha;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -29,6 +33,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ActualizarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -43,9 +48,6 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
 
     private Button dpFechaInicio;
     private Button dpFechaFin;
-
-
-
 
     private Oferta oferta;
 
@@ -118,7 +120,6 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
         oferta.setIdPublicador(7);
         //oferta.setIdPublicador(MiembroOfercompasSesion.getIdMiembro());
         oferta.setCategoria(Integer.parseInt(String.valueOf(spinnerCategoria.getSelectedItemPosition())));
-
     }
 
     public void openDatePickerInicio(View view)
@@ -131,24 +132,34 @@ public class ActualizarOferta extends AppCompatActivity implements AdapterView.O
         datePickerDialogFechaFin.show();
     }
 
-    public void actualizar(View view){
+    public void clicActualizar(View view){
         instanciaOferta();
         try {
-            oferta.publicar();
+            actualizar();
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-/*
-    private String getTodaysDate()
-    {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        month = month + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(day, month, year);
-    }
 
- */
+    public int actualizar() throws JSONException {
+        AtomicInteger respuesta = new AtomicInteger(400);
+        Log.d("OfertaPublicada", this.toString());
+        if (oferta.estaCompleto()) {
+            JSONObject payload = oferta.obtenerJson();
+            String url = MiembroOfercompasSesion.ipSever + "ofertas/"+oferta.getIdPublicacion();
+            MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.PUT, url, payload,
+                    response -> {
+                        try {
+                            respuesta.set(response.getInt("status"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error ->
+                    Log.e("ERROR PUB", "PUBLICAR"));
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        } else {
+            respuesta.set(400);
+        }
+        return respuesta.get();
+    }
 }

@@ -1,29 +1,33 @@
 package com.example.recycler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.example.recycler.comunicacion.MetaRequest;
+import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.Oferta;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
 import com.example.recycler.sesion.SelectorFecha;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.Calendar;
+import java.io.File;
 
 public class PublicarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
     private DatePickerDialog datePickerDialogFechaInicio;
     private DatePickerDialog datePickerDialogFechaFin;
 
@@ -35,11 +39,12 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
 
     private Button dpFechaInicio;
     private Button dpFechaFin;
+    private Button btnBuscarImagen;
 
-
-
+    private TextView tvTituloFoto;
 
     private Oferta oferta;
+    private File foto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +59,24 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         spinnerCategoria.setOnItemSelectedListener(this);
         dpFechaInicio = findViewById(R.id.dpFechaInicio);
         dpFechaFin = findViewById(R.id.dpFechaFin);
+        btnBuscarImagen = findViewById(R.id.btnBuscarImagen);
 
         initValues();
 
     }
 
-    private void initValues(){
+    private void initValues() {
         oferta = new Oferta();
-        datePickerDialogFechaInicio = SelectorFecha.initDatePicker(dpFechaInicio,this);
-        datePickerDialogFechaFin = SelectorFecha.initDatePicker(dpFechaFin,this);
+        datePickerDialogFechaInicio = SelectorFecha.initDatePicker(dpFechaInicio, this);
+        datePickerDialogFechaFin = SelectorFecha.initDatePicker(dpFechaFin, this);
 
         this.txtTitulo = findViewById(R.id.txtTitulo);
         this.txtDescripcion = findViewById(R.id.txtDescripcion);
         this.txtPrecio = findViewById(R.id.txtPrecio);
         this.txtVinculo = findViewById(R.id.txtVinculo);
+        this.tvTituloFoto = findViewById(R.id.tvTituloFoto);
+
+        botonBuscarImagen();
     }
 
     @Override
@@ -91,25 +100,57 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         oferta.setIdPublicador(7);
         //oferta.setIdPublicador(MiembroOfercompasSesion.getIdMiembro());
         oferta.setCategoria(Integer.parseInt(String.valueOf(spinnerCategoria.getSelectedItemPosition())));
-
     }
 
-    public void openDatePickerInicio(View view)
-    {
+    public void openDatePickerInicio(View view) {
         datePickerDialogFechaInicio.show();
     }
 
-    public void openDatePickerFin(View view)
-    {
+    public void openDatePickerFin(View view) {
         datePickerDialogFechaFin.show();
     }
 
-    public void publicar(View view){
+    public void publicar(View view) {
         instanciaOferta();
-        try {
-            oferta.publicar();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (oferta.estaCompleta()) {
+            JSONObject payload = null;
+            try {
+                payload = oferta.obtenerJson();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String url = MiembroOfercompasSesion.ipSever + "ofertas";
+            MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.POST, url, payload,
+                    response -> {
+                        Toast.makeText(this, "Oferta registrada exitosamente", Toast.LENGTH_SHORT).show();
+                    }, error -> Toast.makeText(this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show());
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        } else {
+            Toast.makeText(this, "Información incorrecta", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void botonBuscarImagen() {
+        btnBuscarImagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            Uri targetUri = data.getData();
+            String path = targetUri.getPath();
+            this.foto = new File(path);
+            tvTituloFoto.setText(path);
         }
     }
 }

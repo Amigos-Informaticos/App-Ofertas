@@ -150,4 +150,9 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
         Intent miIntent = new Intent(this, Perfil.class);
         startActivity(miIntent);
     }
+
+    public void publicar(View view) {
+        Intent miIntent = new Intent(this, PublicarCodigo.class);
+        startActivity(miIntent);
+    }
 }
