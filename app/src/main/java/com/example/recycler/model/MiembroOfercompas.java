@@ -5,7 +5,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 
 public class MiembroOfercompas {
     private int idMiembro;
