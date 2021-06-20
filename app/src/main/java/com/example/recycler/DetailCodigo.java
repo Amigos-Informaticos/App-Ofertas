@@ -71,6 +71,8 @@ public class DetailCodigo extends AppCompatActivity {
         tvDescripcion.setText(codigoDescuento.getDescripcion());
         tvCodigo.setText(String.valueOf(codigoDescuento.getCodigo()));
         tvPuntuacion.setText(String.valueOf(codigoDescuento.getPuntuacion()));
+
+        imgItemDetail.setImageResource(codigoDescuento.getImgResource());
     }
 
     public void likeClik(View view) {
