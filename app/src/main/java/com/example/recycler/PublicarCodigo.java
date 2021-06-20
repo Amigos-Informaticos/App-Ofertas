@@ -1,40 +1,25 @@
 package com.example.recycler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.recycler.model.Oferta;
-import com.example.recycler.sesion.MiembroOfercompasSesion;
 import com.example.recycler.sesion.SelectorFecha;
 
 import org.json.JSONException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Calendar;
 
-public class PublicarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-
+public class PublicarCodigo extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private DatePickerDialog datePickerDialogFechaInicio;
     private DatePickerDialog datePickerDialogFechaFin;
 
@@ -46,11 +31,6 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
 
     private Button dpFechaInicio;
     private Button dpFechaFin;
-    private Button btnBuscarImagen;
-
-    private TextView tvTituloFoto;
-    private TextView tvTituloVideo;
-
     private Oferta oferta;
     private File foto;
 
@@ -67,7 +47,6 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         spinnerCategoria.setOnItemSelectedListener(this);
         dpFechaInicio = findViewById(R.id.dpFechaInicio);
         dpFechaFin = findViewById(R.id.dpFechaFin);
-        btnBuscarImagen = findViewById(R.id.btnBuscarImagen);
 
         initValues();
 
@@ -82,9 +61,6 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         this.txtDescripcion = findViewById(R.id.txtDescripcion);
         this.txtPrecio = findViewById(R.id.txtPrecio);
         this.txtVinculo = findViewById(R.id.txtVinculo);
-        this.tvTituloFoto = findViewById(R.id.tvTituloFoto);
-
-        botonBuscarImagen();
     }
 
     @Override
@@ -124,30 +100,6 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
             oferta.publicar();
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void botonBuscarImagen() {
-        btnBuscarImagen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK){
-            Uri targetUri = data.getData();
-            String path = targetUri.getPath();
-            this.foto = new File(path);
-            tvTituloFoto.setText(path);
         }
     }
 }
