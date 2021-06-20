@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -113,7 +112,6 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
 
     public void publicar(View view) {
         instanciaOferta();
-        Log.d("Codigo", this.toString());
         if (oferta.estaCompleta()) {
             JSONObject payload = null;
             try {
@@ -121,11 +119,11 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String url = MiembroOfercompasSesion.ipSever + "codigos";
+            String url = MiembroOfercompasSesion.ipSever + "ofertas";
             MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.POST, url, payload,
                     response -> {
-                        Toast.makeText(this, "Oferta registrado exitosamente", Toast.LENGTH_SHORT).show();
-                    }, error -> Toast.makeText(this, "Código registrado exitosamente", Toast.LENGTH_SHORT).show());
+                        Toast.makeText(this, "Oferta registrada exitosamente", Toast.LENGTH_SHORT).show();
+                    }, error -> Toast.makeText(this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show());
             ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
         } else {
             Toast.makeText(this, "Información incorrecta", Toast.LENGTH_SHORT).show();
