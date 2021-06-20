@@ -2,7 +2,6 @@ package com.example.recycler.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Multimedia {
     private File archivo;

@@ -1,16 +1,9 @@
 package com.example.recycler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,16 +14,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.example.recycler.comunicacion.MetaRequest;
+import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.Oferta;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
 import com.example.recycler.sesion.SelectorFecha;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.Calendar;
 
 public class PublicarOferta extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private DatePickerDialog datePickerDialogFechaInicio;
@@ -117,10 +113,22 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
 
     public void publicar(View view) {
         instanciaOferta();
-        try {
-            oferta.publicar();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        Log.d("Codigo", this.toString());
+        if (oferta.estaCompleta()) {
+            JSONObject payload = null;
+            try {
+                payload = oferta.obtenerJson();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String url = MiembroOfercompasSesion.ipSever + "codigos";
+            MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.POST, url, payload,
+                    response -> {
+                        Toast.makeText(this, "Oferta registrado exitosamente", Toast.LENGTH_SHORT).show();
+                    }, error -> Toast.makeText(this, "Código registrado exitosamente", Toast.LENGTH_SHORT).show());
+            ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
+        } else {
+            Toast.makeText(this, "Información incorrecta", Toast.LENGTH_SHORT).show();
         }
     }
 

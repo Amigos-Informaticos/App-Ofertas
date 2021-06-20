@@ -17,14 +17,11 @@ import com.android.volley.Request;
 import com.example.recycler.comunicacion.MetaRequest;
 import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.CodigoDescuento;
-import com.example.recycler.model.Oferta;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
 import com.example.recycler.sesion.SelectorFecha;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class PublicarCodigo extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private DatePickerDialog datePickerDialogFechaInicio;
@@ -98,7 +95,6 @@ public class PublicarCodigo extends AppCompatActivity implements AdapterView.OnI
 
     public void publicar(View view) {
         instanciaOferta();
-
         Log.d("Codigo", this.toString());
         if (codigoDescuento.estaCompleta()) {
             JSONObject payload = null;
@@ -115,9 +111,7 @@ public class PublicarCodigo extends AppCompatActivity implements AdapterView.OnI
             ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
         } else {
             Toast.makeText(this, "Información incorrecta", Toast.LENGTH_SHORT).show();
-
         }
-
     }
 
     public void mostrarMensaje(String mensaje){
