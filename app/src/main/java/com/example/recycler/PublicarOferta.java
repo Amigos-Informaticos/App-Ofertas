@@ -206,7 +206,7 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
 
 
     private void uploadBitmap(final Bitmap bitmap) {
-        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + oferta.getIdPublicacion() + "/multimedia";
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + 218 + "/multimedia";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
                 new Response.Listener<NetworkResponse>() {
@@ -233,7 +233,7 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
                 long imagename = System.currentTimeMillis();
-                params.put("image", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                params.put("archivo", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
                 return params;
             }
         };
