@@ -127,7 +127,7 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         datePickerDialogFechaFin.show();
     }
 
-    /*
+
     public void publicar(View view) {
         btnBuscarImagen.setEnabled(false);
         instanciaOferta();
@@ -142,7 +142,17 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
             MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.POST, url, payload,
                     response -> {
                         Toast.makeText(this, "Oferta registrada exitosamente", Toast.LENGTH_SHORT).show();
-                        this.regresarAlInicio();
+                        Log.d("RESP",response.toString());
+                        JSONObject ofertaMap = null;
+                        try {
+                            ofertaMap = new JSONObject(String.valueOf(response));
+                            oferta.setIdPublicacion((Integer) ofertaMap.get("idPublicacion"));
+                            this.publicarFoto();
+                            this.regresarAlInicio();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }, error -> {
                 Toast.makeText(this, "No se pudo conectar con el servidor", Toast.LENGTH_SHORT).show();
                 btnBuscarImagen.setEnabled(false);
@@ -152,8 +162,6 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
             Toast.makeText(this, "Información incorrecta", Toast.LENGTH_SHORT).show();
         }
     }
-
-     */
 
 
 
@@ -186,7 +194,7 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         startActivity(miIntent);
     }
 
-    public void publicarFoto(View view) {
+    public void publicarFoto() {
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriFoto);
             uploadBitmap(bitmap);
@@ -207,7 +215,7 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
 
 
     private void uploadBitmap(final Bitmap bitmap) {
-        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + 217 + "/multimedia";
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + oferta.getIdPublicacion() + "/multimedia";
 
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
                 new Response.Listener<NetworkResponse>() {
