@@ -3,10 +3,13 @@ package com.example.recycler;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,7 +29,9 @@ public class ActualizarPerfil extends AppCompatActivity {
     private EditText txtEmail;
     private EditText txtNickName;
     private EditText txtContrasenia;
+    private Button botonActualizar;
     private MiembroOfercompas miembroOfercompas;
+    private boolean deseaActualizar;
 
 
     @Override
@@ -34,7 +39,6 @@ public class ActualizarPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actualizar_perfil);
         this.initViews();
-
     }
     private void instanciarMiembroContraseña(){
         this.miembroOfercompas = new MiembroOfercompas();
@@ -55,6 +59,7 @@ public class ActualizarPerfil extends AppCompatActivity {
         this.txtNickName.setText(MiembroOfercompasSesion.getNickname());
         this.txtEmail.setText(MiembroOfercompasSesion.getEmail());
         this.txtContrasenia = findViewById(R.id.txtPasswordActualizar);
+        this.botonActualizar = findViewById(R.id.buttonActualizar);
     }
     private boolean camposValidosSinContrasenia(){
         boolean camposValidos = false;
@@ -117,8 +122,7 @@ public class ActualizarPerfil extends AppCompatActivity {
     }
 
     private void enviarActualizacion(){
-        Log.e("TOKEN", MiembroOfercompasSesion.getToken());
-
+        this.botonActualizar.setEnabled(false);
         JSONObject object = new JSONObject();
         try {
             object.put("nickname", miembroOfercompas.getNickname());
@@ -130,7 +134,8 @@ public class ActualizarPerfil extends AppCompatActivity {
             e.printStackTrace();
         }
         // Enter the correct url for your api service site
-        String url = "http://192.168.100.10:5000/miembros/" + MiembroOfercompasSesion.getEmail();
+        String url = MiembroOfercompasSesion.ipSever + "miembros/" + MiembroOfercompasSesion.getIdMiembro();
+
         MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.PUT, url, object,
                 response -> {
                     try {
@@ -138,10 +143,12 @@ public class ActualizarPerfil extends AppCompatActivity {
                         MiembroOfercompasSesion.setNickname(response.getString("nickname"));
                         MiembroOfercompasSesion.setContrasenia(response.getString("contrasenia"));
 
-                        Log.e("DATOS", response.toString() );
+                        mostrarMensajeToast("Actualizacion exitosa");
+                        this.botonActualizar.setEnabled(true);
 
 
                     } catch (JSONException e) {
+                        this.botonActualizar.setEnabled(true);
                         e.printStackTrace();
                     }
                 }, error -> {mostrarMensaje(error.networkResponse.toString());});
@@ -150,6 +157,26 @@ public class ActualizarPerfil extends AppCompatActivity {
 
 
     public void clicActualizar(View view) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ActualizarPerfil.this);
+        alertDialog.setMessage("¿Está seguro que desea actualizar su perfil?").setCancelable(true);
+        alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                actualizar();
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alerta = alertDialog.create();
+        alerta.setTitle("Actualizar perfil");
+        alerta.show();
+
+    }
+    public void actualizar(){
         if(txtContrasenia.getText().toString().equals("")){
             if(camposValidosSinContrasenia()){
                 instanciarMiembroSinContraseña();
@@ -164,8 +191,14 @@ public class ActualizarPerfil extends AppCompatActivity {
     }
 
     private void mostrarMensaje(String mensaje){
+        this.botonActualizar.setEnabled(true);
         AlertDialog.Builder alerta = new AlertDialog.Builder(ActualizarPerfil.this);
         alerta.setTitle(mensaje);
         alerta.show();
     }
+    private  void mostrarMensajeToast(String mensaje){
+        this.botonActualizar.setEnabled(true);
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
 }

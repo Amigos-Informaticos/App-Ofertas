@@ -2,6 +2,10 @@ package com.example.recycler.model;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 public class MiembroOfercompas {
     private int idMiembro;
     private String nickname;
@@ -76,5 +80,23 @@ public class MiembroOfercompas {
             valida = true;
         }
         return  valida;
+    }
+    public static String encriptar(String value) {
+        try {
+            String clave = "FooBar1234567890"; // 128 bit
+            byte[] iv = new byte[16];
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            SecretKeySpec sks = new SecretKeySpec(clave.getBytes("UTF-8"), "AES");
+            cipher.init(Cipher.ENCRYPT_MODE, sks, new IvParameterSpec(iv));
+
+            byte[] encriptado = cipher.doFinal(value.getBytes());
+            String contrasenia = android.util.Base64.encodeToString(encriptado, 16);
+            contrasenia = contrasenia.substring(0, contrasenia.length()-1);
+
+            return contrasenia;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

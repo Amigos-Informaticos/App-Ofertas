@@ -50,8 +50,8 @@ public class LoginOfercompas extends AppCompatActivity {
         MiembroOfercompas miembroOfercompas = new MiembroOfercompas();
         miembroOfercompas.setEmail(this.txtEmail.getText().toString());
         miembroOfercompas.setContrasenia(this.txtContrasenia.getText().toString());
-
-        Log.d("OBTENIENDO DATOS", miembroOfercompas.getEmail() + miembroOfercompas.getContrasenia());
+        String contrasenia = miembroOfercompas.getEmail() + miembroOfercompas.getContrasenia();
+        Log.d("OBTENIENDO DATOS", contrasenia );
 
         return  miembroOfercompas;
     }
@@ -60,13 +60,18 @@ public class LoginOfercompas extends AppCompatActivity {
     public void enviarLogin(MiembroOfercompas miembroOfercompas) {
         JSONObject object = new JSONObject();
         try {
+            object.put("email","hola@gmail.com");
+            object.put("contrasenia","z6SEIOxnHpiPm1aT5kKtUw==");
+            /*DESCOMENTAR ESTO!
             object.put("email",miembroOfercompas.getEmail());
-            object.put("contrasenia", miembroOfercompas.getContrasenia());
+            Log.e("LA CONTRASEÑA ES: ", MiembroOfercompas.encriptar(miembroOfercompas.getContrasenia()));
+            String contrasenia = MiembroOfercompas.encriptar(miembroOfercompas.getContrasenia());
+            object.put("contrasenia",contrasenia );*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
         // Enter the correct url for your api service site
-        String url = "http://192.168.100.10:5000/login";
+        String url = MiembroOfercompasSesion.ipSever+ "login";
         MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.POST, url, object,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -95,6 +100,8 @@ public class LoginOfercompas extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 if(error.networkResponse!= null){
                     txtEmail.setText("String Response : " + error.networkResponse.statusCode);
+                }else{
+
                 }
 
 
