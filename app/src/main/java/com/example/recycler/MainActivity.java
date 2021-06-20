@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
     }
 
     public void publicar(View view) {
-        Intent miIntent = new Intent(this, PublicarCodigo.class);
+        Intent miIntent = new Intent(this, PublicarOferta.class);
         startActivity(miIntent);
     }
 }
