@@ -22,6 +22,7 @@ public abstract class Publicacion implements Serializable {
     protected int estado;
     protected int categoria = 0;
     protected int idPublicador;
+    protected int imgResource;
 
     public Publicacion() {
 
@@ -47,6 +48,14 @@ public abstract class Publicacion implements Serializable {
     }
 
      */
+
+    public int getImgResource() {
+        return imgResource;
+    }
+
+    public void setImgResource(int imgResource) {
+        this.imgResource = imgResource;
+    }
 
     public void setIdPublicacion(int idPublicacion) {
         this.idPublicacion = idPublicacion;

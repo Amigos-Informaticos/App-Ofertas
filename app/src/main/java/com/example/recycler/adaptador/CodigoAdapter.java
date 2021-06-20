@@ -9,21 +9,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.example.recycler.R;
-import com.example.recycler.model.Oferta;
+import com.example.recycler.model.CodigoDescuento;
+
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
-    private List<Oferta> items;
-    private List<Oferta> originalItems;
+public class CodigoAdapter extends RecyclerView.Adapter<CodigoAdapter.RecyclerHolder> {
+    private List<CodigoDescuento> items;
+    private List<CodigoDescuento> originalItems;
     private RecyclerItemClick itemClick;
 
-    public OfertaAdapter(List<Oferta> items, RecyclerItemClick itemClick) {
+    public CodigoAdapter(List<CodigoDescuento> items, RecyclerItemClick itemClick) {
         this.items = items;
         this.itemClick = itemClick;
         this.originalItems = new ArrayList<>();
@@ -33,21 +33,18 @@ public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
     @NonNull
     @Override
     public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_oferta_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_codigo_descuento, parent, false);
         return new RecyclerHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerHolder holder, final int position) {
-        final Oferta item = items.get(position);
+        final CodigoDescuento item = items.get(position);
         holder.imgItem.setImageResource(item.getImgResource());
         holder.tvTitulo.setText(item.getTitulo());
         holder.tvDescripcion.setText(item.getDescripcion());
         holder.tvPuntuacion.setText("Puntuación:" + item.getPuntuacion());
-        holder.tvPrecio.setText("$" + item.getPrecio());
         holder.tvFechaFin.setText("Acaba: " + item.getFechaFin());
-
-
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,19 +73,17 @@ public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
         if (strSearch.length() == 0) {
             items.clear();
             items.addAll(originalItems);
-        }
-        else {
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 items.clear();
-                List<Oferta> collect = originalItems.stream()
+                List<CodigoDescuento> collect = originalItems.stream()
                         .filter(i -> i.getTitulo().toLowerCase().contains(strSearch))
                         .collect(Collectors.toList());
 
                 items.addAll(collect);
-            }
-            else {
+            } else {
                 items.clear();
-                for (Oferta i : originalItems) {
+                for (CodigoDescuento i : originalItems) {
                     if (i.getTitulo().toLowerCase().contains(strSearch)) {
                         items.add(i);
                     }
@@ -103,9 +98,8 @@ public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
         private ImageView imgItem;
         private TextView tvTitulo;
         private TextView tvDescripcion;
-        private  TextView tvPuntuacion;
-        private TextView tvPrecio;
-        private  TextView tvFechaFin;
+        private TextView tvPuntuacion;
+        private TextView tvFechaFin;
 
         public RecyclerHolder(@NonNull View itemView_1) {
             super(itemView_1);
@@ -114,12 +108,11 @@ public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
             tvTitulo = itemView.findViewById(R.id.tvTitulo);
             tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
             tvPuntuacion = itemView.findViewById(R.id.tvPuntuacion);
-            tvPrecio = itemView.findViewById(R.id.tvPrecio);
             tvFechaFin = itemView.findViewById(R.id.tvFechaFin);
         }
     }
 
     public interface RecyclerItemClick {
-        void itemClick(Oferta item);
+        void itemClick(CodigoDescuento item);
     }
 }
