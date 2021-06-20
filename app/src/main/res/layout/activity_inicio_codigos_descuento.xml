@@ -23,13 +23,13 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/svSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="411dp"
+        android:layout_height="33dp"
         android:layout_marginTop="104dp"
         app:iconifiedByDefault="false"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:queryHint="Buscar titulo"
-        tools:layout_editor_absoluteX="-3dp" />
+        app:queryHint="Buscar titulo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLista"
@@ -115,17 +115,21 @@
         android:id="@+id/clicReporteUsuarios"
         android:layout_width="139dp"
         android:layout_height="54dp"
-        android:text="Reporte"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:onClick="clicReporteUsuarios"
-        tools:layout_editor_absoluteX="273dp"
-        tools:layout_editor_absoluteY="50dp" />
+        android:text="Reporte"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/botonOfertas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ofertas"
         android:onClick="reporteOfertas"
-        tools:layout_editor_absoluteX="90dp" />
+        android:text="Ofertas"
+        app:layout_constraintStart_toEndOf="@+id/btnPerfil3"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
