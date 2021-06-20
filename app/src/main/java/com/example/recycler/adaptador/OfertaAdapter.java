@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.example.recycler.R;
 import com.example.recycler.model.Oferta;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
     @Override
     public void onBindViewHolder(@NonNull final RecyclerHolder holder, final int position) {
         final Oferta item = items.get(position);
+        Picasso.get().load(item.getURLFoto()).into(holder.imgItem);
         holder.imgItem.setImageResource(item.getImgResource());
         holder.tvTitulo.setText(item.getTitulo());
         holder.tvDescripcion.setText(item.getDescripcion());
