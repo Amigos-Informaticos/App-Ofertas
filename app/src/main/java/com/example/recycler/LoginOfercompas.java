@@ -66,28 +66,41 @@ public class LoginOfercompas extends AppCompatActivity {
             e.printStackTrace();
         }
         // Enter the correct url for your api service site
-        String url = MiembroOfercompasSesion.ipSever+"login";
+        String url = "http://192.168.100.10:5000/login";
         MetaRequest jsonObjectRequest = new MetaRequest(Request.Method.POST, url, object,
-                response -> {
-                    try {
-                        MiembroOfercompasSesion.setEmail(response.getString("email"));
-                        MiembroOfercompasSesion.setIdMiembro(response.getInt("idMiembro"));
-                        MiembroOfercompasSesion.setNickname(response.getString("nickname"));
-                        MiembroOfercompasSesion.setTipoMiembro(response.getInt("tipoMiembro"));
-                        MiembroOfercompasSesion.setToken(response.getString("token"));
-                        MiembroOfercompasSesion.setContrasenia(response.getString("contrasenia"));
-                        LoginOfercompas.this.mostrarMenuPrincipal();
-                        Log.e("DATOS", response.toString());
-                        JSONObject headers = response.getJSONObject("headers");
-                        Log.e("HEADERS", headers.toString());
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            MiembroOfercompasSesion.setEmail(response.getString("email"));
+                            MiembroOfercompasSesion.setIdMiembro(response.getInt("idMiembro"));
+                            MiembroOfercompasSesion.setNickname(response.getString("nickname"));
+                            MiembroOfercompasSesion.setTipoMiembro(response.getInt("tipoMiembro"));
+                            MiembroOfercompasSesion.setToken(response.getString("token"));
+                            MiembroOfercompasSesion.setContrasenia(response.getString("contrasenia"));
+                            LoginOfercompas.this.mostrarMenuPrincipal();
+                            Log.e("DATOS", response.toString());
+                            JSONObject headers = response.getJSONObject("headers");
+                            Log.e("HEADERS", headers.toString());
 
 
-                        //mostrarMenuPrincipal();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            //mostrarMenuPrincipal();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if(error.networkResponse!= null){
+                    txtEmail.setText("String Response : " + error.networkResponse.statusCode);
+                }
 
-                }, error -> txtEmail.setText("String Response : " + error.networkResponse.statusCode));
+
+            }
+
+        });
         ApplicationController.getInstance().addToRequestQueue(jsonObjectRequest);
 
 
