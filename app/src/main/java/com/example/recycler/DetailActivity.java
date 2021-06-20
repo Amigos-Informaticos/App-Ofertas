@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.example.recycler.comunicacion.MetaRequest;
@@ -22,6 +23,7 @@ import com.example.recycler.comunicacion.MetaStringRequest;
 import com.example.recycler.model.ApplicationController;
 import com.example.recycler.model.Oferta;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -57,6 +59,8 @@ public class DetailActivity extends AppCompatActivity {
 
     private void initViews() {
         imgItemDetail = findViewById(R.id.imgItemDetail);
+        Picasso.get().load("http://192.168.56.1:5000/publicaciones/217/imagenes").into(imgItemDetail);
+
         tvTituloDetail = findViewById(R.id.tvTituloDetail);
         tvDescripcion = findViewById(R.id.tvDescripcion);
         txtComentario = findViewById(R.id.txtComentario);
@@ -73,7 +77,9 @@ public class DetailActivity extends AppCompatActivity {
         oferta = (Oferta) getIntent().getExtras().getSerializable("itemDetail");
         Log.d("OFERTA A VER: ", oferta.toString());
 
-        imgItemDetail.setImageResource(oferta.getImgResource());
+        //imgItemDetail.setImageResource(Integer.parseInt("http://192.168.56.1:5000/publicaciones/217/imagenes"));
+
+
         tvTituloDetail.setText(oferta.getTitulo());
         tvDescripcion.setText(oferta.getDescripcion());
         tvPrecio.setText(String.valueOf(oferta.getPrecio()));
