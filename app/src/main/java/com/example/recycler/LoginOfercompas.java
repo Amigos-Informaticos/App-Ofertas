@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -104,7 +105,7 @@ public class LoginOfercompas extends AppCompatActivity {
                 if(error.networkResponse!= null){
                     txtEmail.setText("String Response : " + error.networkResponse.statusCode);
                 }else{
-
+                    mostrarMensaje("ERROR AL CONECTARSE CON EL SERVIDOR");
                 }
 
 
@@ -121,6 +122,10 @@ public class LoginOfercompas extends AppCompatActivity {
         Intent miIntent = new Intent(this, MainActivity.class);
         startActivity(miIntent);
     }
+    private void mostrarMensaje(String mensaje){
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    }
+
 
 
 }
