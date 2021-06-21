@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +25,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.recycler.comunicacion.MetaRequest;
 import com.example.recycler.comunicacion.MetaStringRequest;
 import com.example.recycler.model.ApplicationController;
-import com.example.recycler.model.MiembroOfercompas;
 import com.example.recycler.model.Oferta;
 import com.example.recycler.model.Publicacion;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -71,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
         obtenerInteraccion();
         validarUsuario();
         obtenerComentarios();
-        //funcionEliminar();
+        funcionEliminar();
     }
 
     private void initViews() {
@@ -87,7 +87,7 @@ public class DetailActivity extends AppCompatActivity {
         btnEliminar = findViewById(R.id.btnEliminar);
         btnActualizar = findViewById(R.id.btnActualizar);
         btnDenunciar = findViewById(R.id.btnDenuncia);
-        txtComentarios = findViewById(R.id.txtComentarios);
+        txtComentarios = findViewById(R.id.tvComentarios);
     }
 
     private void initValues() {
@@ -97,7 +97,11 @@ public class DetailActivity extends AppCompatActivity {
         tvDescripcion.setText(oferta.getDescripcion());
         tvPrecio.setText("$" + String.valueOf(oferta.getPrecio()));
         tvPuntuacion.setText(String.valueOf(oferta.getPuntuacion()));
-        Picasso.get().load(oferta.getURLFoto()).into(imgItemDetail);
+        int key = R.drawable.vegeta_blue;
+        Picasso.with(this).invalidate(oferta.getURLFoto());
+        Picasso.with(context).load(oferta.getURLFoto()).networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE).into(imgItemDetail);
+       // Picasso.with(this).load(oferta.getURLFoto()).into(imgItemDetail);
     }
 
     public void likeClik(View view) {
@@ -223,17 +227,13 @@ public class DetailActivity extends AppCompatActivity {
                             }
                         }
                         tvPuntuacion.setText(puntuacion);
+                        obtenerInteraccion();
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(error.networkResponse!= null){
-                    mostrarMensaje("Error al enviar comentario al servidor");
-                }else{
-                    mostrarMensaje("Error al enviar comentario al servidor");
-                }
-
+                obtenerInteraccion();
 
             }
 
@@ -243,8 +243,13 @@ public class DetailActivity extends AppCompatActivity {
 
 
     public void clicIrOferta(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(oferta.getVinculo()));
-        startActivity(browserIntent);
+        try{
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(oferta.getVinculo()));
+            startActivity(browserIntent);
+        }catch (Exception e){
+            mostrarMensaje("LINK CAÍDO");
+        }
+
     }
 
     public void clicComentar(View view) {
@@ -267,11 +272,17 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void clicDislike_(View view) {
+        int puntuacion = oferta.getPuntuacion() - 1;
+        this.tvPuntuacion.setText(puntuacion + " ");
         this.puntuar(false);
+
     }
 
     public void clicLike_(View view) {
+        int puntuacion = oferta.getPuntuacion() + 1;
+        this.tvPuntuacion.setText(puntuacion + " ");
         this.puntuar(true);
+
     }
 
     public  void obtenerInteraccion(){

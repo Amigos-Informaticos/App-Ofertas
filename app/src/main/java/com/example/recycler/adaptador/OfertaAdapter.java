@@ -1,5 +1,6 @@
 package com.example.recycler.adaptador;
 
+import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.example.recycler.R;
 import com.example.recycler.model.Oferta;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,6 +26,11 @@ public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
     private List<Oferta> items;
     private List<Oferta> originalItems;
     private RecyclerItemClick itemClick;
+    private Context conetext;
+
+    public void setConetext(Context conetext){
+        this.conetext = conetext;
+    }
 
     public OfertaAdapter(List<Oferta> items, RecyclerItemClick itemClick) {
         this.items = items;
@@ -41,7 +49,8 @@ public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
     @Override
     public void onBindViewHolder(@NonNull final RecyclerHolder holder, final int position) {
         final Oferta item = items.get(position);
-        Picasso.get().load(item.getURLFoto()).into(holder.imgItem);
+        Picasso.with(conetext).load(item.getURLFoto()).networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE).into(holder.imgItem);
         holder.imgItem.setImageResource(item.getImgResource());
         holder.tvTitulo.setText(item.getTitulo());
         holder.tvDescripcion.setText(item.getDescripcion());
@@ -114,8 +123,8 @@ public class OfertaAdapter extends Adapter<OfertaAdapter.RecyclerHolder> {
 
             imgItem = itemView.findViewById(R.id.imgItem);
             tvTitulo = itemView.findViewById(R.id.tvTitulo);
-            tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
-            tvPuntuacion = itemView.findViewById(R.id.tvPuntuacion);
+            tvDescripcion = itemView.findViewById(R.id.tvDescripcion_codigo);
+            tvPuntuacion = itemView.findViewById(R.id.tvPuntuacion_codigo);
             tvPrecio = itemView.findViewById(R.id.tvPrecio);
             tvFechaFin = itemView.findViewById(R.id.tvFechaFin);
         }

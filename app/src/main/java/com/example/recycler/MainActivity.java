@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvLista.setLayoutManager(manager);
         adapter = new OfertaAdapter(ofertasRecuperadas, this);
+        adapter.setConetext(this);
         rvLista.setAdapter(adapter);
     }
 
