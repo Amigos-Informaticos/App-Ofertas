@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
                         convertirOfertas(array);
 
 
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
