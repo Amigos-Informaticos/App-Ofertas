@@ -114,7 +114,7 @@ public class PublicarOferta extends AppCompatActivity implements AdapterView.OnI
         oferta.setFechaCreacion(dpFechaInicio.getText().toString());
         oferta.setFechaFin(dpFechaFin.getText().toString());
         oferta.setVinculo(txtVinculo.getText().toString());
-        oferta.setIdPublicador(7);
+        oferta.setIdPublicador(MiembroOfercompasSesion.getIdMiembro());
         //oferta.setIdPublicador(MiembroOfercompasSesion.getIdMiembro());
         oferta.setCategoria(Integer.parseInt(String.valueOf(spinnerCategoria.getSelectedItemPosition())));
     }
