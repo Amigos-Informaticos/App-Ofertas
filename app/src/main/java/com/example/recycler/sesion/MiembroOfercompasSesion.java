@@ -2,6 +2,9 @@ package com.example.recycler.sesion;
 
 import android.app.Application;
 
+import com.example.recycler.DetailReporteMiembro;
+import com.example.recycler.model.DetalleMiembroDenunciado;
+
 public class MiembroOfercompasSesion extends Application {
     private static int idMiembro = 0;
     private static String email = null;
@@ -9,7 +12,12 @@ public class MiembroOfercompasSesion extends Application {
     private static String token = "";
     private static int tipoMiembro = 1;
     private static  String contrasenia = "";
-    public static String ipSever = "http://192.168.56.1:5000/";
+    public static String ipSever = "http://192.168.100.10:5000/";
+
+    public static int idPublicacionDenunciar = 0;
+    public static String tituloPublicacionDenunciar = "";
+    public static DetalleMiembroDenunciado miembroDenunciado;
+
 
     public static int getIdMiembro() {
         return idMiembro;
@@ -54,6 +62,7 @@ public class MiembroOfercompasSesion extends Application {
     public static int getTipoMiembro() {
         return tipoMiembro;
     }
+
 
     public static void setTipoMiembro(int tipoMiembro) {
         MiembroOfercompasSesion.tipoMiembro = tipoMiembro;

@@ -249,4 +249,14 @@ public abstract class Publicacion implements Serializable {
     }
 
      */
+
+    public static  boolean comentarioValido(String comentario){
+        boolean comentarioValido = false;
+        if(comentario!= null){
+            if(comentario.length()>5){
+                comentarioValido = true;
+            }
+        }
+        return  comentarioValido;
+    }
 }

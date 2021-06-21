@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="motivos">
+        <item>Motivo</item>
+        <item>Alcohol</item>
+        <item>Animales</item>
+        <item>Armas</item>
+        <item>Drogas</item>
+        <item>Fraude</item>
+        <item>LinkCaido</item>
+        <item>Ofensivo</item>
+        <item>Pirateria</item>
+        <item>Pornografia</item>
+        <item>Spam</item>
+    </string-array>
+
+</resources>
