@@ -129,6 +129,6 @@
             android:text="Reporte"
             app:layout_constraintEnd_toStartOf="@+id/btnPublicar"
             app:layout_constraintStart_toStartOf="@+id/bntCodigos"
-            tools:layout_editor_absoluteY="0dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
