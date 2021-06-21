@@ -15,25 +15,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
-import com.example.recycler.comunicacion.MetaRequest;
 import com.example.recycler.comunicacion.MetaStringRequest;
 import com.example.recycler.model.ApplicationController;
-import com.example.recycler.model.Oferta;
+import com.example.recycler.model.CodigoDescuento;
 import com.example.recycler.sesion.MiembroOfercompasSesion;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONObject;
-
-public class DetailActivity extends AppCompatActivity {
-
+public class DetailCodigo extends AppCompatActivity {
     private ImageView imgItemDetail;
     private TextView tvTituloDetail;
     private TextView tvDescripcion;
     private EditText txtComentario;
-    private TextView tvPrecio;
+    private TextView tvCodigo;
     private TextView tvPuntuacion;
     private ImageButton btnLike;
     private ImageButton btnDisike;
@@ -43,13 +36,13 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnEliminar;
     private Button btnActualizar;
 
-    private Oferta oferta;
+    private CodigoDescuento codigoDescuento;
     public Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ver_oferta);
+        setContentView(R.layout.activity_detail_codigo);
         setTitle(getClass().getSimpleName());
 
         initViews();
@@ -62,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         tvTituloDetail = findViewById(R.id.tvTituloDetail);
         tvDescripcion = findViewById(R.id.tvDescripcion);
         txtComentario = findViewById(R.id.txtComentario);
-        tvPrecio = findViewById(R.id.tvPrecio);
+        tvCodigo = findViewById(R.id.tvCodigo);
         tvPuntuacion = findViewById(R.id.tvPuntuacion);
         btnLike = findViewById(R.id.btnLike);
         btnDisike = findViewById(R.id.btnDislike);
@@ -72,17 +65,18 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        oferta = (Oferta) getIntent().getExtras().getSerializable("itemDetail");
-        Log.d("OFERTA A VER: ", oferta.toString());
-        tvTituloDetail.setText(oferta.getTitulo());
-        tvDescripcion.setText(oferta.getDescripcion());
-        tvPrecio.setText(String.valueOf(oferta.getPrecio()));
-        tvPuntuacion.setText(String.valueOf(oferta.getPuntuacion()));
-        Picasso.get().load(oferta.getURLFoto()).into(imgItemDetail);
+        codigoDescuento = (CodigoDescuento) getIntent().getExtras().getSerializable("itemDetail");
+        Log.d("OFERTA A VER: ", codigoDescuento.toString());
+        tvTituloDetail.setText(codigoDescuento.getTitulo());
+        tvDescripcion.setText(codigoDescuento.getDescripcion());
+        tvCodigo.setText(String.valueOf(codigoDescuento.getCodigo()));
+        tvPuntuacion.setText(String.valueOf(codigoDescuento.getPuntuacion()));
+
+        imgItemDetail.setImageResource(codigoDescuento.getImgResource());
     }
 
     public void likeClik(View view) {
-        String comentario = "El id de la oferta es:" + oferta.getIdPublicacion() + "La sesion del usuario es:" + MiembroOfercompasSesion.getNickname();
+        String comentario = "El id de la oferta es:" + codigoDescuento.getIdPublicacion() + "La sesion del usuario es:" + MiembroOfercompasSesion.getNickname();
         txtComentario.setText(comentario);
     }
 
@@ -97,12 +91,12 @@ public class DetailActivity extends AppCompatActivity {
         btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(DetailActivity.this);
-                alertDialog.setMessage("¿Está seguro que desea eliminar esta Oferta?").setCancelable(true);
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(DetailCodigo.this);
+                alertDialog.setMessage("¿Está seguro que desea eliminar este Codigo?").setCancelable(true);
                 alertDialog.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        eliminarOferta();
+                        eliminarCodigo();
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
@@ -111,21 +105,21 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 });
                 AlertDialog alerta = alertDialog.create();
-                alerta.setTitle("Eliminar Oferta");
+                alerta.setTitle("Eliminar Codigo");
                 alerta.show();
 
             }
         });
     }
 
-    public void eliminarOferta(){
-        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + oferta.getIdPublicacion();
+    public void eliminarCodigo(){
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + codigoDescuento.getIdPublicacion();
         MetaStringRequest stringRequest = new MetaStringRequest(Request.Method.DELETE, url,
                 response -> {
-                    regresarMainActivity();
+                    regresarInicioCodigosDescuento();
                 }, error -> {
             if (error.networkResponse != null){
-                Log.d("GG","WEBOS");
+                Log.d("GG","HI");
             }
         }
         );
@@ -133,15 +127,13 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void actualizar(View view) {
-        Intent intent = new Intent(this, ActualizarOferta.class);
-        intent.putExtra("oferta", oferta);
+        Intent intent = new Intent(this, ActualizarCodigo.class);
+        intent.putExtra("codigo", codigoDescuento);
         startActivity(intent);
     }
 
-    public void regresarMainActivity() {
-        Intent intent = new Intent(context, MainActivity.class);
+    public void regresarInicioCodigosDescuento() {
+        Intent intent = new Intent(context, InicioCodigosDescuento.class);
         startActivity(intent);
     }
-
-
 }

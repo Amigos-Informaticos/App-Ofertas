@@ -70,7 +70,7 @@ public class InicioCodigosDescuento extends AppCompatActivity implements CodigoA
 
     @Override
     public void itemClick(CodigoDescuento item) {
-        Intent intent = new Intent(this, DetailCodigoDescuento.class);
+        Intent intent = new Intent(this, DetailCodigo.class);
         intent.putExtra("itemDetail", item);
         startActivity(intent);
 
@@ -118,6 +118,7 @@ public class InicioCodigosDescuento extends AppCompatActivity implements CodigoA
                 codigo.setFechaFin(jsonObject.getString("fechaFin"));
                 codigo.setIdPublicador(jsonObject.getInt("publicador"));
                 codigo.setPuntuacion(jsonObject.getInt("puntuacion"));
+                codigo.setCodigo(jsonObject.getString("codigo"));
                 codigo.setImgResource(R.drawable.vegeta_super_blue);
                 codigosRecuperados.add(codigo);
 
