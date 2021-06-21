@@ -132,7 +132,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void eliminarOferta(){
-        String url = MiembroOfercompasSesion.ipSever + "ofertas/" + oferta.getIdPublicacion();
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" + oferta.getIdPublicacion();
         MetaStringRequest stringRequest = new MetaStringRequest(Request.Method.DELETE, url,
                 response -> {
                     regresarMainActivity();
