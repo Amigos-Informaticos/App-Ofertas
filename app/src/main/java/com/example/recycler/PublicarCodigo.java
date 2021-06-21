@@ -81,7 +81,7 @@ public class PublicarCodigo extends AppCompatActivity implements AdapterView.OnI
         codigoDescuento.setCodigo(txtCodigo.getText().toString());
         codigoDescuento.setFechaCreacion(dpFechaInicio.getText().toString());
         codigoDescuento.setFechaFin(dpFechaFin.getText().toString());
-        codigoDescuento.setIdPublicador(7);
+        codigoDescuento.setIdPublicador(MiembroOfercompasSesion.getIdMiembro());
         codigoDescuento.setCategoria(Integer.parseInt(String.valueOf(spinnerCategoria.getSelectedItemPosition())));
     }
 
