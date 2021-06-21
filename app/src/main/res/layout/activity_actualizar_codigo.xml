@@ -31,7 +31,9 @@
                 android:layout_gravity="center"
                 android:ems="10"
                 android:hint="¿Qué vas a publicar?"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="50"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/tvDescripcionCodigo"
@@ -50,7 +52,8 @@
                 android:layout_gravity="center"
                 android:ems="10"
                 android:hint="¿De qué se trata?"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="200" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +78,9 @@
                 android:layout_gravity="center"
                 android:ems="10"
                 android:hint="Pega el codigo aqui"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="40"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/tvFechaInicioCodigo"
