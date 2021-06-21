@@ -54,6 +54,7 @@ public class DetailActivity extends AppCompatActivity {
     private Button btnDenunciar;
     private Button btnEliminar;
     private Button btnActualizar;
+    private TextView txtComentarios;
 
 
     private Oferta oferta;
@@ -68,6 +69,8 @@ public class DetailActivity extends AppCompatActivity {
         initViews();
         initValues();
         obtenerInteraccion();
+        validarUsuario();
+        obtenerComentarios();
         //funcionEliminar();
     }
 
@@ -84,6 +87,7 @@ public class DetailActivity extends AppCompatActivity {
         btnEliminar = findViewById(R.id.btnEliminar);
         btnActualizar = findViewById(R.id.btnActualizar);
         btnDenunciar = findViewById(R.id.btnDenuncia);
+        txtComentarios = findViewById(R.id.txtComentarios);
     }
 
     private void initValues() {
@@ -91,7 +95,7 @@ public class DetailActivity extends AppCompatActivity {
         Log.d("OFERTA A VER: ", oferta.toString());
         tvTituloDetail.setText(oferta.getTitulo());
         tvDescripcion.setText(oferta.getDescripcion());
-        tvPrecio.setText(String.valueOf(oferta.getPrecio()));
+        tvPrecio.setText("$" + String.valueOf(oferta.getPrecio()));
         tvPuntuacion.setText(String.valueOf(oferta.getPuntuacion()));
         Picasso.get().load(oferta.getURLFoto()).into(imgItemDetail);
     }
@@ -169,6 +173,7 @@ public class DetailActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             mostrarMensaje("Comentario registrado");
                             txtComentario.setText("");
+                            obtenerComentarios();
 
 
                         }
@@ -310,5 +315,69 @@ public class DetailActivity extends AppCompatActivity {
         };
         ApplicationController.getInstance().addToRequestQueue(stringRequest);
 
+    }
+    private void validarUsuario(){
+        if(oferta.getIdPublicador() != MiembroOfercompasSesion.getIdMiembro()){
+            if(MiembroOfercompasSesion.getTipoMiembro()!=2){
+                this.btnActualizar.setVisibility(View.GONE);
+                this.btnEliminar.setVisibility(View.GONE);
+            }else{
+                this.btnActualizar.setVisibility(View.GONE);
+            }
+        }
+    }
+    private void obtenerComentarios(){
+        String url = MiembroOfercompasSesion.ipSever + "publicaciones/" +oferta.getIdPublicacion() + "/comentarios";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        try {
+                            mostrarMensaje("obteniendoComentarios");
+                            JSONArray jsonArray = new JSONArray(response);
+                            obtenerComentariosJson(jsonArray);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.d("ERROR","error => "+error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("idMiembro", String.valueOf(MiembroOfercompasSesion.getIdMiembro()));
+
+                return params;
+            }
+        };
+        ApplicationController.getInstance().addToRequestQueue(stringRequest);
+    }
+
+    private String obtenerComentariosJson(JSONArray array){
+        StringBuilder comentarios = new StringBuilder();
+        for(int i=0;i<array.length();i++) {
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = array.getJSONObject(i);
+                comentarios.append(jsonObject.getString("nickname")).append(" => ");
+                comentarios.append(jsonObject.getString("contenido")).append("\n");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        this.txtComentarios.setText(comentarios.toString());
+        return comentarios.toString();
     }
 }

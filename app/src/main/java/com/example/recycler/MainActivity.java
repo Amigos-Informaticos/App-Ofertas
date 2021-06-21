@@ -157,4 +157,9 @@ public class MainActivity extends AppCompatActivity implements OfertaAdapter.Rec
 
     public void clicAtras(View view) {
     }
+
+    public void clicReporte(View view) {
+        Intent miIntent = new Intent(this, MiembrosDenunciados.class);
+        startActivity(miIntent);
+    }
 }

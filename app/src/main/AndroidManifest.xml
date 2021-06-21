@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Recycler"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DenunciarPublicacion"></activity>
+        <activity android:name=".DetailReporteMiembro"></activity>
+        <activity android:name=".MiembrosDenunciados" />
+        <activity android:name=".DenunciarPublicacion" />
         <activity android:name=".PublicarCodigo" />
         <activity android:name=".ActualizarOferta" />
         <activity android:name=".DetailCodigoDescuento" />
