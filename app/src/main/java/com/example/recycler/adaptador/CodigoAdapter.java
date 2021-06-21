@@ -106,8 +106,8 @@ public class CodigoAdapter extends RecyclerView.Adapter<CodigoAdapter.RecyclerHo
 
             imgItem = itemView.findViewById(R.id.imgItem);
             tvTitulo = itemView.findViewById(R.id.tvTitulo);
-            tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
-            tvPuntuacion = itemView.findViewById(R.id.tvPuntuacion);
+            tvDescripcion = itemView.findViewById(R.id.tvDescripcion_codigo);
+            tvPuntuacion = itemView.findViewById(R.id.tvPuntuacion_codigo);
             tvFechaFin = itemView.findViewById(R.id.tvFechaFin);
         }
     }

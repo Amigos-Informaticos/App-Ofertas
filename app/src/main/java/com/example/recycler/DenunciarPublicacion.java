@@ -94,12 +94,6 @@ public class DenunciarPublicacion extends AppCompatActivity implements AdapterVi
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(error.networkResponse!= null){
-                    mostrarMensaje("Error al enviar comentario al servidor");
-                }else{
-                    mostrarMensaje("Error al enviar comentario al servidor");
-                }
-
 
             }
 
