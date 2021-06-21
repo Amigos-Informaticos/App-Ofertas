@@ -55,7 +55,7 @@
         app:layout_constraintVertical_bias="0.129" />
 
     <Button
-        android:id="@+id/btnActualizar"
+        android:id="@+id/btnActualizar_codigo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Actualizar Información"

@@ -29,36 +29,19 @@
         app:layout_constraintTop_toBottomOf="@+id/imgItemDetail" />
 
     <TextView
-        android:id="@+id/tvPuntuacion"
+        android:id="@+id/tvPuntuacion_codigo"
         android:layout_width="93dp"
         android:layout_height="43dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="148dp"
         android:gravity="center"
         android:text="000"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/btnLike"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion" />
-
-    <ImageButton
-        android:id="@+id/btnLike"
-        android:layout_width="52dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion"
-        app:srcCompat="@android:drawable/btn_star" />
-
-    <ImageButton
-        android:id="@+id/btnDislike"
-        android:layout_width="52dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toEndOf="@+id/tvPuntuacion"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion"
-        app:srcCompat="@android:drawable/btn_star" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion_codigo" />
 
     <TextView
-        android:id="@+id/tvDescripcion"
+        android:id="@+id/tvDescripcion_codigo"
         android:layout_width="409dp"
         android:layout_height="104dp"
         android:layout_marginStart="16dp"
@@ -72,76 +55,71 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloDetail" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="400dp"
-        android:layout_height="148dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/txtComentarios_codigos"
+        android:layout_width="391dp"
+        android:layout_height="164dp"
+        android:layout_marginTop="44dp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        app:layout_constraintTop_toTopOf="@+id/txtComentario_codigo" />
 
     <EditText
-        android:id="@+id/txtComentario"
+        android:id="@+id/txtComentario_codigo"
         android:layout_width="262dp"
         android:layout_height="44dp"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
         android:ems="10"
         android:hint="Escribe tu comentario aquí"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/btnComenta"
-        app:layout_constraintEnd_toStartOf="@+id/btnComenta"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/btnComenta_codigo"
+        app:layout_constraintEnd_toStartOf="@+id/btnComenta_codigo"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnComenta"
+        android:id="@+id/btnComenta_codigo"
         android:layout_width="115dp"
         android:layout_height="38dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="4dp"
         android:text="Comenta"
+        android:onClick="clicComentar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEliminar" />
+        app:layout_constraintTop_toBottomOf="@+id/btnEliminar_codigo" />
 
     <Button
-        android:id="@+id/btnDenuncia"
+        android:id="@+id/btnDenuncia_codigo"
         android:layout_width="132dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="60dp"
         android:text="Denuncia"
+        android:onClick="denunciarCodigo"
+        app:layout_constraintBottom_toTopOf="@+id/txtComentarios_codigos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnDislike"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/btnActualizar_codigo" />
 
     <Button
-        android:id="@+id/btnActualizar"
+        android:id="@+id/btnActualizar_codigo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="14dp"
         android:onClick="actualizar"
         android:text="Actualizar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCodigo" />
+        app:layout_constraintBottom_toTopOf="@+id/txtComentario_codigo"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnEliminar"
+        android:id="@+id/btnEliminar_codigo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:text="Eliminar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCodigo" />
@@ -153,7 +131,31 @@
         android:layout_marginTop="24dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDislike" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPuntuacion_codigo" />
+
+    <Button
+        android:id="@+id/btnLike_codigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Like"
+        android:onClick="like_codigo"
+        app:layout_constraintBottom_toTopOf="@+id/tvCodigo"
+        app:layout_constraintEnd_toStartOf="@+id/tvPuntuacion_codigo"
+        app:layout_constraintHorizontal_bias="0.578"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnDislike_codigo"
+        android:onClick="dislike_codigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="24dp"
+        android:text="Dislike"
+        app:layout_constraintBottom_toTopOf="@+id/tvCodigo"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
